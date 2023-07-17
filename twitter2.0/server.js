@@ -1,7 +1,9 @@
 import express from "express";
 import pkg from "pg";
-const { Pool } = pkg;
+import dotenv from "dotenv";
+dotenv.config();
 
+const { Pool } = pkg;
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -10,24 +12,24 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 
 const pool = new Pool({
-  user: "pha.randomacc",
-  host: "ep-calm-star-142882.ap-southeast-1.aws.neon.tech",
-  database: "music",
-  password: "RlTh8IXfC1ds",
-  port: 5432,
-  ssl: true,
+  user: process.env.PG_USER,
+  host: process.env.PG_HOST,
+  database: process.env.PG_DB,
+  password: process.env.PG_PASSWORD,
+  port: process.env.PG_PORT,
+  ssl: process.env.PG_SSL,
 });
 
 app.get("/", (request, response) => {
   response.json({ info: "Node.js, Express, and Postgres API" });
 });
 
-const getBands = async (request, response) => {
-  const results = await pool.query("SELECT * FROM bands");
+const getUsers = async (request, response) => {
+  const results = await pool.query('SELECT * FROM "user";');
   response.status(200).json(results.rows);
 };
 
-app.get("/bands2", getBands);
+app.get("/users", getUsers);
 
 // Start the server
 app.listen(PORT, () => {
