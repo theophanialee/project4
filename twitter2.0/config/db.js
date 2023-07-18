@@ -1,16 +1,11 @@
-import pkg from "pg";
-const { Pool } = pkg;
+import mongoose from "mongoose";
 import dotenv from "dotenv";
-
 dotenv.config();
 
-const pool = new Pool({
-  user: process.env.PG_USER,
-  host: process.env.PG_HOST,
-  database: process.env.PG_DB,
-  password: process.env.PG_PASSWORD,
-  port: process.env.PG_PORT,
-  ssl: process.env.PG_SSL,
-});
+mongoose.connect(process.env.DATABASE_URL);
 
-export default pool;
+const db = mongoose.connection;
+
+db.on("connected", function () {
+  console.log(`Connected to ${db.name} at ${db.host}:${db.port}`);
+});
