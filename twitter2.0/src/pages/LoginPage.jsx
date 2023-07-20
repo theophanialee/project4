@@ -1,20 +1,12 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import LoginForm from "../components/LoginForm";
 
 export default function LoginPage() {
+  const [user, setUser] = useState(null);
+
   return (
-    <>
-      <label>Username</label>
-      <input></input>
-      <label>Password</label>
-      <input></input>
-      <h3>No account yet?</h3>
-      <h3>
-        {" "}
-        <Link to="/signup">
-          <u>Sign up</u>
-        </Link>
-        now
-      </h3>
-    </>
+    <div className="loginForm">
+      <LoginForm />
+    </div>
   );
 }

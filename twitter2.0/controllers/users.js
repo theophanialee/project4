@@ -1,20 +1,14 @@
 import User from "../models/User.js";
 
 async function createUser(req, res) {
-  const { username, email, password } = req.body;
-  console.log(req.body);
-
   try {
     // Create a new User document using the model and the request data
-    const newUser = await User.create({
-      username,
-      email,
-      password,
-    });
+    const newUser = await User.create(req.body);
 
     // Respond with the newly created user data
     res.status(201).json(newUser);
     console.log(newUser);
+    console.log(req.body);
   } catch (error) {
     res.status(500).json({ error: "Failed to create user" });
   }
@@ -33,4 +27,20 @@ async function getUser(req, res) {
   }
 }
 
-export { createUser, getUser };
+async function checkUn(req, res) {
+  const { username } = req.params;
+  const normalizedUsername = username.toLowerCase();
+  console.log(normalizedUsername);
+  try {
+    const user = await User.findOne({ normalizedUsername });
+    if (user) {
+      res.json({ exists: true });
+    } else {
+      res.json({ exists: false });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Failed to check through users" });
+  }
+}
+
+export { createUser, getUser, checkUn };

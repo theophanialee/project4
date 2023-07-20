@@ -1,6 +1,6 @@
 // This is the base path of the Express route we'll define
 
-export async function signUp(userData) {
+async function signUp(userData) {
   // Fetch uses an options object as a second arg to make requests
   // other than basic GET requests, include data, headers, etc.
   const res = await fetch(`api/users/createUser`, {
@@ -18,3 +18,25 @@ export async function signUp(userData) {
     throw new Error("Invalid Sign Up");
   }
 }
+
+async function checkUsername(username) {
+  try {
+    // Make a GET request to the backend API with the username as a query parameter
+    const response = await fetch(`/api/users/checkUn/${username}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!response.ok) {
+      throw new Error("Failed to check username");
+    }
+    // Parse the response data as JSON
+    const data = await response.json();
+    return data.exists;
+  } catch (error) {
+    // Handle any errors that occurred during the fetch or parsing the response
+    console.error("Error checking username availability:", error);
+    return false; // Return false to indicate an error occurred during the check
+  }
+}
+
+export { signUp, checkUsername };

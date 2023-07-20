@@ -4,10 +4,5 @@ import SignUpForm from "../components/SignUpForm";
 export default function SignUpPage() {
   const [user, setUser] = useState(null);
 
-  return (
-    <>
-      <h1>Sign up</h1>
-      <SignUpForm />
-    </>
-  );
+  return <SignUpForm />;
 }

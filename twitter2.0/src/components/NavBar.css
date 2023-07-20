@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+:root {
+  font-family: 'Varela Round', sans-serif; }
+
+.NavBarItem {
+  flex: 1; /* Spread each NavBar item to occupy equal space */
+  display: flex;
+  align-items: center;
+  font-size:1.5em;
+}
+
+button {
+  font-size: 1.5em;
+}
+
+img {
+  width: 50px; /* Set the desired width for the image */
+  height: 50px; /* Set the desired height for the image */
+  margin-bottom: 20px;
+}
