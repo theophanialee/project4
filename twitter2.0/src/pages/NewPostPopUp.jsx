@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import sendRequest from "../utilities/send-request";
 
 export default function NewPostPopUp({ showPopup, setShowPopup }) {

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 const SALT_ROUNDS = 6; // 6 is a reasonable value
 
@@ -45,7 +44,6 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, SALT_ROUNDS);
   return next();
 });
-
 
 // Create the User model based on the schema
 const User = mongoose.model("User", userSchema);

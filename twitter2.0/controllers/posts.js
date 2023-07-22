@@ -15,4 +15,21 @@ async function createPost(req, res) {
   }
 }
 
-export { createPost };
+async function getPosts(req, res) {
+  if (!req.user) {
+    res.status(401).json({ message: "Not logged in" });
+    return;
+  }
+  try {
+    const userPosts = await Post.find({ user: req.user._id }).populate(
+      "user",
+      "username"
+    );
+    // The 'populate()' method takes the field to populate ('user') and the fields to include ('username profilePicture')
+    res.json(userPosts);
+  } catch (error) {
+    res.status(404).json({ msg: "Id not found!" });
+  }
+}
+
+export { createPost, getPosts };

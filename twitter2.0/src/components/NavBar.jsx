@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
 import "./NavBar.css";
 import ProfileNav from "./ProfileNav";
-import { useContext, useState } from "react";
-import { UserContext } from "../pages/App/App";
+import { useState } from "react";
+
 import NewPostPopUp from "../pages/NewPostPopUp";
 
 export default function NavBar() {
-  const { user } = useContext(UserContext);
   const [showPopup, setShowPopup] = useState(false);
 
   const handleFishClick = () => {
@@ -52,7 +51,7 @@ export default function NavBar() {
         </li>
       </ul>
 
-      <div className="fixed bottom-0 left-0 w-1/4 h-1/6 bg-purple-800">
+      <div className="NavBarItem fixed bottom-0 left-0 w-1/4 h-1/7 bg-purple-800">
         <ProfileNav />
       </div>
       {showPopup && (

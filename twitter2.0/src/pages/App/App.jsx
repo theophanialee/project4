@@ -1,12 +1,16 @@
-import React from "react";
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import SignUpPage from "../SignUpPage";
-import MainPage from "../MainPage";
 import LoginPage from "../LoginPage";
 import NewPostPage from "../NewPostPopUp";
 import NavBar from "../../components/NavBar";
 import { createContext, useState } from "react";
 import { getUser } from "../../utilities/users-service";
+import ProfilePage from "../ProfilePage";
+import SettingsPage from "../SettingsPage";
+import ChangeUsername from "../../components/settings/ChangeUsername copy";
+import EditUser from "../../components/settings/EditUser";
+import ChangePassword from "../../components/settings/ChangePassword copy";
+import Privacy from "../../components/settings/Privacy";
 
 export const UserContext = createContext();
 
@@ -20,15 +24,26 @@ export default function App() {
           <aside className="w-1/4 h-7/8 fixed left-0 top-0 h-screen bg-purple-950">
             <NavBar />
           </aside>
-          <div className="main-container col-start-2">
+          <div
+            className="main-container w-2/4 fixed top-0 h-screen"
+            style={{ left: "25%" }}
+          >
             <Routes>
-              <Route path="/" element={<MainPage />} />
+              {/* Routes that require login */}
+              <Route path="/profile" element={<ProfilePage />} />
               <Route path="/post" element={<NewPostPage />} />
-              {/* Add other routes */}
+              <Route path="/settings" element={<SettingsPage />} />
+              <Route
+                path="/settings/changeusername"
+                element={<ChangeUsername />}
+              />
+              <Route path="/settings/edituser" element={<EditUser />} />
+              <Route
+                path="/settings/changepassword"
+                element={<ChangePassword />}
+              />
+              <Route path="/settings/privacy" element={<Privacy />} />
             </Routes>
-          </div>
-          <div className="col-start-4">
-            {/* Empty 4th column for future component */}
           </div>
         </div>
       ) : (
@@ -40,7 +55,6 @@ export default function App() {
               <Route path="/" element={<LoginPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignUpPage />} />
-              {/* Add other routes */}
             </Routes>
           </aside>
         </div>

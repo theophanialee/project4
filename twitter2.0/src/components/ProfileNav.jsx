@@ -1,4 +1,4 @@
-import { useContext, useState, useRef } from "react";
+import { useContext, useState } from "react";
 import "./NavBar.css";
 import { UserContext } from "../pages/App/App";
 import { Link } from "react-router-dom";
@@ -7,48 +7,33 @@ import * as userService from "../utilities/users-service";
 export default function ProfileNav() {
   const { user, setUser } = useContext(UserContext);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
   };
 
-  const handleMouseDown = (event) => {
-    if (dropdownRef.current && dropdownRef.current.contains(event.target)) {
-      // Click inside the dropdown, do not close it.
-      return;
-    }
-    // Click outside the dropdown, close it.
-    setDropdownOpen(false);
-  };
-
-  function handleLogOut() {
+  const handleLogOut = () => {
     console.log("logout");
     userService.logOut();
     setUser(null);
     setDropdownOpen(false); // Close the dropdown after logout
-  }
+  };
 
   return (
     <>
-      <div
-        className="nav-bar justify-items-center flex items-center"
-        onMouseDown={handleMouseDown}
-      >
-        {/* Added flex and items-center */}
-        <button
+      <div className="nav-bar justify-items-center flex items-center w-full h-full">
+        <div
           id="dropdownDelayButton"
           data-dropdown-toggle="dropdownDelay"
           data-dropdown-delay="500"
-          className="w-full h-full"
+          className="w-full h-full p-5"
           type="button"
           onClick={toggleDropdown}
         >
           {user.username}
-        </button>
+        </div>
         {/* Dropdown menu */}
         <div
-          ref={dropdownRef}
           className={`${
             isDropdownOpen ? "block" : "hidden"
           } absolute bottom-full left-1/2 transform -translate-x-1/2 z-10 bg-purple-900 divide-y divide-purple-400 rounded-lg shadow w-full`}
