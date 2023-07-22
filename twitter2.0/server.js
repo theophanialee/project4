@@ -5,7 +5,9 @@ import dotenv from "dotenv";
 import logger from "morgan";
 import "./config/db.js";
 import { fileURLToPath } from "url";
-import userRoutes from "./routes/users.js"; // Import the user controller
+import userRoutes from "./routes/users.js";
+import postRoutes from "./routes/posts.js";
+import checkToken from "./config/checkToken.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,11 +19,13 @@ const PORT = process.env.PORT || 3001;
 // Middleware: Use morgan for logging HTTP requests
 app.use(logger("dev"));
 app.use(express.json());
+app.use(checkToken);
+
 
 // Define your routes here
 app.use("/api/users", userRoutes);
-// app.use("/api/posts", userRoutes);
-// app.use("/api/dms", userRoutes);
+app.use("/api/posts", postRoutes);
+// app.use("/api/dms", dmRoutes);
 
 // Catch all
 // The following "catch all" route (note the *) is necessary

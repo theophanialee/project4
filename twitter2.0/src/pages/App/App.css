@@ -11,8 +11,7 @@
 
 .main-container {
   grid-column: 2 ; /* Place the main container in columns 2 and 3 */
-  padding: 20px; /* Add padding to the main container */
-  margin-left: 60px; /* Push the main container to the right, leaving space for the nav bar */
+ 
 }
 
 aside {
@@ -20,4 +19,8 @@ aside {
   top: 0;
   left: 0;
   height: 100vh;
+}
+
+a {
+  color: blue;
 }

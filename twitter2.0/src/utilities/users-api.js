@@ -39,4 +39,29 @@ async function checkUsername(username) {
   }
 }
 
-export { signUp, checkUsername };
+
+async function login(credentials) {
+  try {
+    const response = await fetch("/api/users/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        throw new Error("Email and password do not match");
+      }
+      throw new Error("Login failed");
+    }
+
+    const token = await response.json();
+    return token;
+  } catch (error) {
+    throw new Error("Login failed");
+  }
+}
+
+export { signUp, checkUsername, login };

@@ -1,7 +1,5 @@
-import { Link } from "react-router-dom";
-import { signUp } from "../utilities/users-service";
+import { signUp, checkUsername } from "../utilities/users-service";
 import { useRef, useState } from "react";
-import { checkUsername } from "../utilities/users-api";
 import "./form.css";
 
 export default function SignUpForm() {
@@ -50,6 +48,13 @@ export default function SignUpForm() {
     }
   }
 
+  // Function to handle username input change and reset error messages
+  function handleUsernameChange() {
+    setErrorMsg(null);
+    setIsUnValid(false);
+    setFirstCheck(false);
+  }
+
   return (
     <>
       <form className="form-container" onSubmit={handleSubmit}>
@@ -62,12 +67,13 @@ export default function SignUpForm() {
             name="username"
             ref={usernameRef}
             autoComplete="username"
+            onChange={handleUsernameChange} // Add the event listener to reset error messages
           />
         </div>
         <button
           type="button"
           onClick={handleCheckUN}
-          className="bg-gray-800 m-5"
+          className="bg-purple-950 m-5"
         >
           Check if available
         </button>
@@ -110,7 +116,9 @@ export default function SignUpForm() {
             autoComplete="new-password"
           />
         </div>
-        <button className="bg-blue-500 hover:bg-blue-700 m-5">Confirm</button>
+        <button className="bg-purple-500 hover:bg-purple-700 m-5">
+          Confirm
+        </button>
       </form>
       {errorMsg && <p>{errorMsg}</p>}
     </>
