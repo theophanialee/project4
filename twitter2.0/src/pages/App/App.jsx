@@ -22,6 +22,7 @@ import VerifiedForm from "../../components/VerifiedForm";
 import NotificationsPage from "../NotificationsPage";
 import ListsPage from "../ListsPage";
 import DMsPage from "../DMsPage";
+import LandingPage from "../../components/LandingPage";
 
 export const UserContext = createContext();
 export default function App() {
@@ -32,7 +33,9 @@ export default function App() {
       <PopupProvider>
         {!user && (
           <>
-            <aside className="w-1/2 h-full fixed right-0 top-0 h-screen bg-purple-950"></aside>
+            <aside className="w-1/2 h-full fixed right-0 top-0 h-screen bg-purple-950">
+              <LandingPage />
+            </aside>
             <aside className="">
               <Routes>
                 <Route path="/" element={<LoginPage />} />

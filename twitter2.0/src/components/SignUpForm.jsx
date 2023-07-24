@@ -61,7 +61,7 @@ export default function SignUpForm() {
   return (
     <>
       <form
-        className="form-container fixed top-0 right-0 w-1/2 h-5/4 text-center"
+        className="before-login fixed top-0 right-0 w-1/2 h-5/4 text-center"
         onSubmit={handleSubmit}
       >
         <h1 className="text-center">Create a new account!</h1>

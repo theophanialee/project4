@@ -3,11 +3,13 @@ import { useContext, useRef, useState } from "react";
 import "./form.css";
 import { UserContext } from "../pages/App/App";
 import { login } from "../utilities/users-service";
+import { useNavigate } from "react-router";
 
 export default function LoginForm() {
   const [errorMsg, setErrorMsg] = useState(null);
   const usernameRef = useRef(null);
   const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -21,6 +23,7 @@ export default function LoginForm() {
       // payload of the JSON Web Token (JWT)
       const existingUser = await login(credentials);
       setUser(existingUser);
+      navigate("/");
     } catch {
       setErrorMsg("Log In Failed - Try Again");
     }
@@ -28,7 +31,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <form className="form-container" onSubmit={handleSubmit}>
+      <form className="before-login" onSubmit={handleSubmit}>
         <h1 className="text-center">Log In</h1>
         <div className="flex flex-col">
           <label className="mb-1 mt-5">Username</label>{" "}
