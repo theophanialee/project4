@@ -1,5 +1,6 @@
 import { signUp, checkUsername } from "../utilities/users-service";
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./form.css";
 
 export default function SignUpForm() {
@@ -8,6 +9,7 @@ export default function SignUpForm() {
   const [isUnValid, setIsUnValid] = useState(false);
   const [firstCheck, setFirstCheck] = useState(false);
   const usernameRef = useRef(null);
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -21,6 +23,7 @@ export default function SignUpForm() {
       email: e.target.email.value,
       password: e.target.password.value,
     };
+    navigate("/login");
     try {
       const user = await signUp(formData);
     } catch {
@@ -57,7 +60,10 @@ export default function SignUpForm() {
 
   return (
     <>
-      <form className="form-container" onSubmit={handleSubmit}>
+      <form
+        className="form-container fixed top-0 right-0 w-1/2 h-5/4 text-center"
+        onSubmit={handleSubmit}
+      >
         <h1 className="text-center">Create a new account!</h1>
         <div className="flex flex-col">
           <label className="mb-1 mt-2">Username</label>{" "}

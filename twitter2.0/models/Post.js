@@ -11,21 +11,24 @@ const postSchema = new mongoose.Schema(
       required: true,
       maxlength: 280,
     },
-    hashtags: {
-      type: String,
-    },
-    likes: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-    reposts: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-    replies: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Post",
-    },
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    reposts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    replies: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+      },
+    ],
   },
   {
     timestamps: true,

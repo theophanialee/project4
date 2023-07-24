@@ -7,6 +7,9 @@ async function createPost(req, res) {
     const newPost = await Post.create({
       user: req.user._id,
       content: req.body.content,
+      likes: [],
+      reposts: [],
+      replies: [],
     });
     console.log(newPost);
     res.status(201).json(newPost);
@@ -76,7 +79,6 @@ async function deletePost(req, res) {
 
 async function getOnePost(req, res) {
   const { id } = req.params; // Use 'req.params' to access the URL parameters
-
   try {
     // Find the post by its ID in the database
     const post = await Post.findById(id).populate("user", "username");
@@ -93,4 +95,46 @@ async function getOnePost(req, res) {
   }
 }
 
-export { createPost, getPosts, getFollowingPosts, deletePost, getOnePost };
+async function addLike(req, res) {
+  const { id } = req.params;
+  const userId = req.user._id;
+  try {
+    const post = await Post.findById(id).populate("likes", "username");
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    const hasLiked = post.likes.some((likeUserId) => likeUserId.equals(userId));
+
+    if (hasLiked) {
+      post.likes.pull(userId);
+    } else {
+      post.likes.push(userId);
+    }
+
+    const updatedPost = await post.save();
+    const likeCount = updatedPost.likes.length;
+    const likedUsers = updatedPost.likes.map((user) => ({
+      id: user._id,
+      username: user.username,
+    }));
+
+    res.json({
+      post: updatedPost,
+      likeCount: likeCount,
+      likedUsers: likedUsers,
+      hasLiked: hasLiked,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to add/remove like to/from post" });
+  }
+}
+
+export {
+  createPost,
+  getPosts,
+  getFollowingPosts,
+  deletePost,
+  getOnePost,
+  addLike,
+};

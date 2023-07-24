@@ -9,5 +9,6 @@ router.post("/createUser", usersController.createUser);
 router.get("/checkUn/:username", usersController.checkUn);
 router.post("/login", usersController.login);
 router.get("/check-token", ensureLoggedIn, usersController.checkToken);
+router.patch("/editUsername", usersController.editUsername);
 
 export default router;

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import getTimeDifference from "./getTimeDiffernce";
 import MoreOptions from "./post/MoreOptions";
-import { UserContext } from "../pages/App/App";
 import { Link } from "react-router-dom";
+import sendRequest from "../utilities/send-request";
 
 export default function PostCard({ user, posts }) {
   const [copiedPostId, setCopiedPostId] = useState(null);
@@ -16,33 +16,48 @@ export default function PostCard({ user, posts }) {
     }, 1000);
   }
 
-  function handleLike(postId) {
-    console.log("user like:", postId);
+  async function handleLike(postId) {
+    console.log("user like/unlike:", postId);
+    try {
+      const response = await sendRequest(`api/posts/like/${postId}`, "PATCH");
+      console.log("Response data:", response);
+    } catch (error) {
+      console.log(error);
+    }
   }
+
   return (
     <>
       {posts.map((post) => (
         <div key={post._id} className="my-1 px-5 py-2 bg-neutral-900">
-          <Link to={`/post/${post._id}`}>
-            <div className="flex justify-between">
+          <div className="flex justify-between">
+            <Link to={`/post/${post._id}`}>
               <div className="my-2 text-xl">@{post.user.username}</div>
-              <div className="my-2 text-xs">
-                {getTimeDifference(post.createdAt)}
-              </div>
+              <div className="py-2">{post.content}</div>
+            </Link>
+            <div className="my-2 text-xs">
+              {getTimeDifference(post.createdAt)}
+              {post.user._id === user._id && <MoreOptions post={post} />}
             </div>
-            <div className="py-2">{post.content}</div>
-          </Link>
+          </div>
+
           <div className="my-2 flex items-center">
             {/* Reply */}
-            <button>🗨</button>
+            <button className="mx-2">🗨</button>
+            <div className="mx-3">{post.replies.length}</div>
             {/* Retweet button */}
-            <button>↺</button>
+            <button className="mx-4">↺</button>
+            <div className="mx-2">{post.reposts.length}</div>
             {/* Like button */}
-            <button onClick={() => handleLike(post._id)}>♡</button>
+            <button onClick={() => handleLike(post._id)} className="mx-4">
+              {post.likes.includes(user._id) ? "♥" : "♡"}
+            </button>
+            <div className="mx-2">{post.likes.length}</div>
             {/* Share button */}
-            <button onClick={() => handleShare(post._id)}>⇧</button>
+            <button onClick={() => handleShare(post._id)} className="mx-4">
+              ⇧
+            </button>
             {/* Use the MoreOptions component and pass the post object */}
-            {post.user._id === user._id && <MoreOptions post={post} />}
           </div>
           {copiedPostId === post._id && (
             <div

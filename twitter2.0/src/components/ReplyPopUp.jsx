@@ -1,9 +1,9 @@
 import { useState } from "react";
 import sendRequest from "../utilities/send-request";
-import { usePopup } from "../components/PopupContext";
+import { usePopup } from "./PopupContext";
 import { useNavigate } from "react-router";
 
-export default function NewPostPopUp() {
+export default function ReplyPopUp() {
   const { showPopup, setShowPopup } = usePopup();
   const [content, setContent] = useState("");
   const navigate = useNavigate();

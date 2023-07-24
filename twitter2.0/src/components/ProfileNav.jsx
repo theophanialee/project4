@@ -1,11 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../pages/App/App";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as userService from "../utilities/users-service";
 
 export default function ProfileNav() {
   const { user, setUser } = useContext(UserContext);
   const [showDropdown, setShowDropdown] = useState(false);
+  const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setShowDropdown((prev) => !prev);
@@ -16,7 +17,23 @@ export default function ProfileNav() {
     userService.logOut();
     setUser(null);
     setShowDropdown(false); // Close the dropdown after logout
+    navigate("/");
   };
+
+  useEffect(() => {
+    // Fetch the user data when the component mounts
+    const fetchUserData = async () => {
+      try {
+        const user = await userService.getUser();
+        setUser(user);
+      } catch (error) {
+        console.log(error);
+        setUser(null);
+      }
+    };
+
+    fetchUserData();
+  }, [setUser]);
 
   return (
     <>

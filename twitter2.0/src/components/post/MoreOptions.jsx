@@ -43,9 +43,9 @@ export default function MoreOptions({ post }) {
         <div
           className="bg-purple-950 rounded-lg shadow-md absolute top-0 right-0 p-2"
           style={{
-            marginTop: "-3.5rem",
-            marginRight: "-5rem",
-            width: "120px",
+            marginTop: "-2.5rem",
+            marginRight: "0rem",
+            width: "90px",
           }}
         >
           {/* Dropdown content (Delete and Favourite options) */}

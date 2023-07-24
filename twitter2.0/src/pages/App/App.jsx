@@ -26,8 +26,20 @@ export default function App() {
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <PopupProvider>
+        {!user && (
+          <>
+            <aside className="w-1/2 h-full fixed right-0 top-0 h-screen bg-purple-950"></aside>
+            <aside className="">
+              <Routes>
+                <Route path="/" element={<LoginPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
+              </Routes>
+            </aside>
+          </>
+        )}
         <div className="flex flex-wrap">
-          {user ? (
+          {user && (
             <>
               <aside className="w-1/4 h-7/8 fixed left-0 top-0 h-screen bg-purple-950">
                 <NavBar />
@@ -64,17 +76,6 @@ export default function App() {
                   <Trends />
                 </div>
               </div>
-            </>
-          ) : (
-            <>
-              <aside className="w-1/2 h-full fixed left-0 top-0 h-screen bg-purple-950"></aside>
-              <aside className="w-1/2 h-full fixed right-0 top-0 h-screen">
-                <Routes>
-                  <Route path="/" element={<LoginPage />} />
-                  <Route path="/login" element={<LoginPage />} />
-                  <Route path="/signup" element={<SignUpPage />} />
-                </Routes>
-              </aside>
             </>
           )}
         </div>

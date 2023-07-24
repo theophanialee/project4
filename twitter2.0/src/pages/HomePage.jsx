@@ -10,6 +10,7 @@ export default function HomePage() {
   const [content, setContent] = useState("");
   const navigate = useNavigate();
   const [tooLong, setTooLong] = useState(false);
+  console.log(tooLong);
 
   async function getPosts() {
     try {
@@ -64,9 +65,7 @@ export default function HomePage() {
           />
           <div className="flex justify-end">
             {tooLong && (
-              <div className="text-right mt-2 mr-5 text-red-500">
-                Post is too long
-              </div>
+              <div className="text-red-500 mt-2 mr-5">Post is too long</div>
             )}
             <div
               className={`text-right mt-2 mr-5 ${

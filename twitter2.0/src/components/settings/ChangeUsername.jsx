@@ -1,25 +1,29 @@
 import { useContext, useRef, useState } from "react";
 import ".././form.css";
 import { checkUsername } from "../../utilities/users-api";
+import sendRequest from "../../utilities/send-request";
 
 export default function ChangeUsername() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [doesUnExist, setDoesUnExist] = useState(undefined);
   const [isUnValid, setIsUnValid] = useState(false);
   const [firstCheck, setFirstCheck] = useState(false);
+  const [successMsg, setSuccessMsg] = useState(false);
   const newUsernameRef = useRef(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const newUsername = newUsernameRef.current.value.trim().toLowerCase();
-
-    // Additional validation if needed
-    // For demonstration purposes, let's just log the new username
+    const newUsername = newUsernameRef.current.value;
     console.log("New Username:", newUsername);
-
-    setErrorMsg(null); // Reset error message
+    try {
+      await sendRequest(`/api/users/editUsername`, "PATCH", { newUsername });
+      setErrorMsg(null);
+      setSuccessMsg(true);
+    } catch (error) {
+      console.log(error);
+      setErrorMsg("Failed to update username. Please try again.");
+    }
   }
-
   async function handleCheckUN() {
     const newUsername = newUsernameRef.current.value.trim().toLowerCase();
     console.log(newUsername);
@@ -43,6 +47,7 @@ export default function ChangeUsername() {
     setErrorMsg(null);
     setIsUnValid(false);
     setFirstCheck(false);
+    setSuccessMsg(false);
   }
 
   return (
@@ -73,9 +78,9 @@ export default function ChangeUsername() {
         </button>
         {firstCheck ? (
           doesUnExist ? (
-            <div className="text-red-700">Username taken</div>
+            <div className="text-red-500">Username taken</div>
           ) : (
-            <div className="text-green-700">Username available!</div>
+            <div className="text-green-500">Username available!</div>
           )
         ) : null}
         {isUnValid && (
@@ -86,8 +91,17 @@ export default function ChangeUsername() {
         <button className="bg-purple-500 hover:bg-purple-700 m-5">
           Change Username
         </button>
+        <div className="flex flex-col items-center">
+          {errorMsg && <div className="text-red-500">{errorMsg}</div>}
+          {successMsg && (
+            <div className="m-5 text-green-500 text-center">
+              Successfully updated!
+              <br />
+              Please re-login with your new username to update your profile.
+            </div>
+          )}
+        </div>
       </form>
-      {errorMsg && <p>{errorMsg}</p>}
     </>
   );
 }

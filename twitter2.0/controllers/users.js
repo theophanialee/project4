@@ -11,19 +11,20 @@ function createJWT(user) {
     { expiresIn: "24h" }
   );
 }
-
 async function createUser(req, res) {
   try {
     // Create a new User document using the model and the request data
     const newUser = await User.create(req.body);
     const token = createJWT(newUser);
+
     const response = await Profile.create({
-      user: req.user._id,
+      user: newUser._id, // Include the _id of the newly created User
       displaypic: "",
       header: "",
       bio: "",
       birthdate: "",
     });
+
     // Respond with the newly created user data
     res.status(201).json(token);
     console.log(token);
@@ -98,5 +99,36 @@ async function login(req, res) {
     res.status(400).json({ message: err.message });
   }
 }
+async function editUsername(req, res) {
+  const { newUsername } = req.body;
+  const normalizedUsername = newUsername.toLowerCase();
 
-export { createUser, getUser, checkUn, login, checkToken };
+  try {
+    const existingUser = await User.findOne({ normalizedUsername });
+    if (existingUser) {
+      res.status(409).json({ message: "Username already taken" });
+      return;
+    }
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: req.user._id },
+      { username: newUsername, normalizedUsername: normalizedUsername },
+      { new: true }
+    );
+
+    if (updatedUser) {
+      res.status(200).json({
+        message: "Username updated successfully",
+        username: newUsername,
+      });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while updating the username" });
+  }
+}
+
+export { createUser, getUser, checkUn, login, checkToken, editUsername };
