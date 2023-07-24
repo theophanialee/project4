@@ -12,11 +12,12 @@ import ChangePassword from "../../components/settings/ChangePassword";
 import Privacy from "../../components/settings/Privacy";
 import { PopupProvider } from "../../components/PopupContext";
 import HomePage from "../HomePage";
-import SinglePostCard from "../../components/SinglePostCard";
+import PostCard from "../../components/PostCard";
 import "./App.css";
 import SearchBar from "../../components/SearchBar";
 import NewPostPopUp from "../NewPostPopUp";
 import Trends from "../../components/Trends";
+import SinglePostPage from "../SinglePostPage";
 
 export const UserContext = createContext();
 export default function App() {
@@ -40,7 +41,7 @@ export default function App() {
                   <Route path="/" element={<HomePage />} />
                   <Route path="/profile" element={<ProfilePage />} />
                   <Route path="/post" element={<NewPostPopUp />} />
-                  <Route path="/post/:id" element={<SinglePostCard />} />
+                  <Route path="/post/:id" element={<SinglePostPage />} />
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route
                     path="/settings/changeusername"

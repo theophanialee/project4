@@ -48,4 +48,49 @@ async function getFollowingPosts(req, res) {
   }
 }
 
-export { createPost, getPosts, getFollowingPosts };
+async function deletePost(req, res) {
+  const { id } = req.params;
+
+  try {
+    const post = await Post.findById(id);
+    console.log(post.user.toString());
+    console.log(req.user._id);
+
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    if (post.user.toString() !== req.user._id.toString()) {
+      return res
+        .status(403)
+        .json({ error: "Unauthorized: You cannot delete this post" });
+    }
+
+    await Post.findByIdAndDelete(id);
+
+    return res.status(200).json({ message: "Post deleted successfully" });
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to delete post" });
+  }
+}
+
+async function getOnePost(req, res) {
+  const { id } = req.params; // Use 'req.params' to access the URL parameters
+
+  try {
+    // Find the post by its ID in the database
+    const post = await Post.findById(id).populate("user", "username");
+
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    console.log(post); // Add this line to see the received data in the server console
+
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to get the post" });
+  }
+}
+
+export { createPost, getPosts, getFollowingPosts, deletePost, getOnePost };

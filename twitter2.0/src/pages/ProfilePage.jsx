@@ -1,7 +1,7 @@
 import sendRequest from "../utilities/send-request";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "./App/App";
-import SinglePostCard from "../components/SinglePostCard";
+import PostCard from "../components/PostCard";
 
 export default function ProfilePage() {
   const [posts, setPosts] = useState([]);
@@ -25,7 +25,7 @@ export default function ProfilePage() {
   return (
     <div className="">
       <h1 className="text-2xl font-bold p-5">{user.username}</h1>
-      <SinglePostCard user={user} posts={posts} />
+      <PostCard user={user} posts={posts} />
     </div>
   );
 }

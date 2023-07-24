@@ -1,10 +1,12 @@
 import { useState } from "react";
 import sendRequest from "../utilities/send-request";
 import { usePopup } from "../components/PopupContext";
+import { useNavigate } from "react-router";
 
 export default function NewPostPopUp() {
   const { showPopup, setShowPopup } = usePopup();
   const [content, setContent] = useState("");
+  const navigate = useNavigate();
 
   const handleInputChange = (event) => {
     setContent(event.target.value);
@@ -19,6 +21,7 @@ export default function NewPostPopUp() {
       });
       setShowPopup(false);
       setContent("");
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
@@ -27,6 +30,7 @@ export default function NewPostPopUp() {
   // Close the popup after submitting the new post.
   const closePopup = () => {
     setShowPopup(false);
+    navigate("/");
   };
 
   return (
@@ -58,7 +62,7 @@ export default function NewPostPopUp() {
                 className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mr-2"
                 onClick={handleSubmit}
               >
-                Fish
+                Spill!
               </button>
             </div>
           </div>
