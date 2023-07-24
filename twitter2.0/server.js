@@ -24,7 +24,7 @@ app.use(checkToken);
 
 // Define your routes here
 app.use("/api/users", userRoutes);
-app.use("/api/profile", profileRoutes);
+app.use("/api/profiles", profileRoutes);
 app.use("/api/posts", postRoutes);
 
 // app.use("/api/dms", dmRoutes);

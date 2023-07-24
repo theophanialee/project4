@@ -2,7 +2,6 @@ import { useParams } from "react-router";
 import sendRequest from "../utilities/send-request";
 import { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
-import { UserContext } from "./App/App";
 
 export default function SinglePostPage() {
   const { id } = useParams();

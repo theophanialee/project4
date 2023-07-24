@@ -30,9 +30,11 @@ export default function PostCard({ user, posts }) {
     <>
       {posts.map((post) => (
         <div key={post._id} className="my-1 px-5 py-2 bg-neutral-900">
+          <Link to={`/profile/${post.user.username}`}>
+            <div className="my-2 text-xl">@{post.user.username}</div>
+          </Link>
           <div className="flex justify-between">
             <Link to={`/post/${post._id}`}>
-              <div className="my-2 text-xl">@{post.user.username}</div>
               <div className="py-2">{post.content}</div>
             </Link>
             <div className="my-2 text-xs">

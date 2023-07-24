@@ -19,21 +19,34 @@ async function createPost(req, res) {
 }
 
 async function getPosts(req, res) {
-  if (!req.user) {
-    res.status(401).json({ message: "Not logged in" });
+  const { username } = req.params;
+  console.log(username);
+
+  if (!username) {
+    res.status(400).json({ message: "Username parameter is missing" });
     return;
   }
+
   try {
-    const userPosts = await Post.find({ user: req.user._id }).populate(
+    const profileUser = await User.findOne({ username });
+
+    if (!profileUser) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    const userPosts = await Post.find({ user: profileUser._id }).populate(
       "user",
       "username"
     );
-    // The 'populate()' method takes the field to populate ('user') and the fields to include ('username profilePicture')
+
     res.json(userPosts);
   } catch (error) {
-    res.status(404).json({ msg: "Id not found!" });
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
   }
 }
+
 
 async function getFollowingPosts(req, res) {
   if (!req.user) {

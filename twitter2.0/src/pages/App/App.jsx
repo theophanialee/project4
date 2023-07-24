@@ -67,7 +67,7 @@ export default function App() {
 
                   <Route path="/lists" element={<ListsPage />} />
 
-                  <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/profile/:username" element={<ProfilePage />} />
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route
                     path="/settings/changeusername"

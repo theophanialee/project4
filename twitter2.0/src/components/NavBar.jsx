@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { usePopup } from "./PopupContext";
 import ProfileNav from "./ProfileNav";
-import NewPostPopUp from "../pages/NewPostPopUp";
+import { useContext } from "react";
+import { UserContext } from "../pages/App/App";
 
 export default function NavBar() {
   const { showPopup, setShowPopup } = usePopup();
+  const { user } = useContext(UserContext);
 
   const handleNewClick = () => {
     console.log("new post popup", showPopup);
@@ -37,7 +39,7 @@ export default function NavBar() {
             </Link>
           </li>
           <li className="NavBarItem py-1 flex items-center">
-            <Link to="/profile" className="flex-1 text-2xl">
+            <Link to={`/profile/${user.username}`} className="flex-1 text-2xl">
               Profile
             </Link>
           </li>
