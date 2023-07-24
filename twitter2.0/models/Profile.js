@@ -7,25 +7,17 @@ const profileSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: `User`,
     },
-    followers: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: `Follower`,
-    },
-    following: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: `Following`,
-    },
     displaypic: {
-      type: URL,
+      type: String,
     },
     header: {
-      type: URL,
+      type: String,
     },
     bio: {
       type: String,
     },
     birthdate: {
-      type: String,
+      type: Date,
     },
   },
   {

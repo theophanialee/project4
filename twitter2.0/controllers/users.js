@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import Profile from "../models/Profile.js";
 
 function createJWT(user) {
   return jwt.sign(
@@ -16,6 +17,13 @@ async function createUser(req, res) {
     // Create a new User document using the model and the request data
     const newUser = await User.create(req.body);
     const token = createJWT(newUser);
+    const response = await Profile.create({
+      user: req.user._id,
+      displaypic: "",
+      header: "",
+      bio: "",
+      birthdate: "",
+    });
     // Respond with the newly created user data
     res.status(201).json(token);
     console.log(token);

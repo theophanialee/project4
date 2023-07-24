@@ -1,62 +1,75 @@
 import { Link } from "react-router-dom";
-import "./NavBar.css";
+import { usePopup } from "./PopupContext";
 import ProfileNav from "./ProfileNav";
-import { useState } from "react";
-
 import NewPostPopUp from "../pages/NewPostPopUp";
 
 export default function NavBar() {
-  const [showPopup, setShowPopup] = useState(false);
+  const { showPopup, setShowPopup } = usePopup();
 
-  const handleFishClick = () => {
+  const handleNewClick = () => {
     console.log("new post popup", showPopup);
     setShowPopup(true);
   };
 
   return (
-    <div className="nav-bar p-10">
-      <ul>
-        <img src="./fish.png" className="" alt="Logo" />
-        <li className="NavBarItem">
-          <Link to="/">Home</Link>
+    <div className="nav-bar p-10 flex flex-col justify-between h-screen">
+      <div>
+        <ul className="space-y-1">
+          <img src="./fish.png" className="w-10 h-10 mb-5" alt="Logo" />
+          <li className="NavBarItem py-1 flex items-center">
+            <Link to="/" className="flex-1 text-2xl">
+              Home
+            </Link>
+          </li>
+          <li className="NavBarItem py-1 flex items-center">
+            <Link to="/notifications" className="flex-1 text-2xl">
+              Notifications
+            </Link>
+          </li>
+          <li className="NavBarItem py-1 flex items-center">
+            <Link to="/messages" className="flex-1 text-2xl">
+              Messages
+            </Link>
+          </li>
+          <li className="NavBarItem py-1 flex items-center">
+            <Link to="/lists" className="flex-1 text-2xl">
+              Lists
+            </Link>
+          </li>
+          <li className="NavBarItem py-1 flex items-center">
+            <Link to="/profile" className="flex-1 text-2xl">
+              Profile
+            </Link>
+          </li>
+          <li className="NavBarItem py-1 flex items-center">
+            <Link to="/settings" className="flex-1 text-2xl">
+              Settings
+            </Link>
+          </li>
+        </ul>
+        <li className="NavBarItem py-1 flex items-center">
+          <div className="flex justify-center items-center w-full">
+            <Link to="/post">
+              <button
+                onClick={handleNewClick}
+                className="bg-purple-600 rounded-full w-28 mt-5 text-2xl w-full px-24 hover:bg-purple-400 hover:text-white"
+              >
+                Spill!
+              </button>
+            </Link>
+          </div>
         </li>
-        <li className="NavBarItem">
-          <Link to="/explore">Explore</Link>
-        </li>
-        <li className="NavBarItem">
-          <Link to="/notifications">Notifications</Link>
-        </li>
-        <li className="NavBarItem">
-          <Link to="/messages">Messages</Link>
-        </li>
-        <li className="NavBarItem">
-          <Link to="/lists">Lists</Link>
-        </li>
-        <li className="NavBarItem">
-          <Link to="/profile">Profile</Link>
-        </li>
-        <li className="NavBarItem">
-          <Link to="/settings">Settings</Link>
-        </li>
-        <div className="flex-grow">
-          <button
-            onClick={handleFishClick}
-            className="bg-purple-600 rounded-full w-28 mt-5 text-xl"
-          >
-            Fish
-          </button>
-        </div>
-        <li className="NavBarItem mt-10 p-5 rounded-lg bg-purple-900">
-          <Link to="/reqVerified">GET VERIFIED</Link>
-        </li>
-      </ul>
-
-      <div className="NavBarItem fixed bottom-0 left-0 w-1/4 h-1/7 bg-purple-800">
+        <ul className="space-y-1">
+          <li className="rounded-lg bg-white my-6 p-3 ">
+            <Link to="/reqVerified" className="flex-1 text-2xl text-purple-800">
+              ✓ GET VERIFIED
+            </Link>
+          </li>
+        </ul>
+      </div>
+      <div className="NavBarItem fixed bottom-0 left-0 w-1/4 h-1/7">
         <ProfileNav />
       </div>
-      {showPopup && (
-        <NewPostPopUp showPopup={showPopup} setShowPopup={setShowPopup} />
-      )}
     </div>
   );
 }

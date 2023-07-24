@@ -11,6 +11,9 @@ const postSchema = new mongoose.Schema(
       required: true,
       maxlength: 280,
     },
+    hashtags: {
+      type: String,
+    },
   },
   {
     timestamps: true,

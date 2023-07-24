@@ -32,4 +32,20 @@ async function getPosts(req, res) {
   }
 }
 
-export { createPost, getPosts };
+async function getFollowingPosts(req, res) {
+  if (!req.user) {
+    res.status(401).json({ message: "Not logged in" });
+    return;
+  }
+
+  try {
+    // Find all posts in the database
+    const allPosts = await Post.find().populate("user", "username");
+
+    res.json(allPosts);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to get following posts" });
+  }
+}
+
+export { createPost, getPosts, getFollowingPosts };

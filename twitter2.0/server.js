@@ -7,6 +7,7 @@ import "./config/db.js";
 import { fileURLToPath } from "url";
 import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
+import profileRoutes from "./routes/profile.js";
 import checkToken from "./config/checkToken.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -21,10 +22,11 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(checkToken);
 
-
 // Define your routes here
 app.use("/api/users", userRoutes);
+app.use("/api/profile", profileRoutes);
 app.use("/api/posts", postRoutes);
+
 // app.use("/api/dms", dmRoutes);
 
 // Catch all
