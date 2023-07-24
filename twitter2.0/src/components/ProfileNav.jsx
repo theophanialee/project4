@@ -5,17 +5,17 @@ import * as userService from "../utilities/users-service";
 
 export default function ProfileNav() {
   const { user, setUser } = useContext(UserContext);
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const toggleDropdown = () => {
-    setDropdownOpen((prev) => !prev);
+    setShowDropdown((prev) => !prev);
   };
 
   const handleLogOut = () => {
     console.log("logout");
     userService.logOut();
     setUser(null);
-    setDropdownOpen(false); // Close the dropdown after logout
+    setShowDropdown(false); // Close the dropdown after logout
   };
 
   return (
@@ -34,7 +34,7 @@ export default function ProfileNav() {
         {/* Dropdown menu */}
         <div
           className={`${
-            isDropdownOpen ? "block" : "hidden"
+            showDropdown ? "block" : "hidden"
           } absolute bottom-full left-1/2 transform -translate-x-1/2 z-10 bg-purple-950 divide-y divide-purple-400 rounded-lg shadow w-full`}
         >
           <ul className="py-2 text-white" aria-labelledby="dropdownDelayButton">
