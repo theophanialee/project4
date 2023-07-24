@@ -37,7 +37,7 @@ export default function ProfileNav() {
 
   return (
     <>
-      <div className="nav-bar justify-items-center flex items-center w-full h-full  border-t-2 border-purple-900">
+      <div className="nav-bar justify-items-center flex items-center w-full h-full border-t-2 border-purple-900">
         <div
           id="dropdownDelayButton"
           data-dropdown-toggle="dropdownDelay"

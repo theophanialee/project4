@@ -36,8 +36,8 @@ export default function ChangePassword() {
 
   return (
     <>
+      <h1 className="m-5">Change Password</h1>
       <form className="form-container" onSubmit={handleSubmit}>
-        <h1 className="text-center">Change Password</h1>
         <div className="flex flex-col">
           <label className="mb-1 mt-5">Old Password</label>{" "}
           <input

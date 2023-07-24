@@ -54,7 +54,7 @@ export default function HomePage() {
     <>
       <div className="">
         <h1 className="p-5">Home</h1>
-        <div className="bg-neutral-900 max-w-full w-full relative rounded-2xl p-5">
+        <div className="bg-neutral-900 max-w-full w-full relative p-5">
           <textarea
             className="bg-neutral-900 pt-5 w-full resize-none "
             style={{ outline: "none" }}
@@ -75,7 +75,7 @@ export default function HomePage() {
               {content.length}
             </div>
             <button
-              className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-3 mr-3 rounded mr-2"
+              className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-3 mr-3 rounded-3xl mr-2"
               onClick={handleSubmit}
             >
               Spill!

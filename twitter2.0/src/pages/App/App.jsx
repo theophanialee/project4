@@ -18,6 +18,10 @@ import SearchBar from "../../components/SearchBar";
 import NewPostPopUp from "../NewPostPopUp";
 import Trends from "../../components/Trends";
 import SinglePostPage from "../SinglePostPage";
+import VerifiedForm from "../../components/VerifiedForm";
+import NotificationsPage from "../NotificationsPage";
+import ListsPage from "../ListsPage";
+import DMsPage from "../DMsPage";
 
 export const UserContext = createContext();
 export default function App() {
@@ -51,9 +55,16 @@ export default function App() {
                 <Routes>
                   {/* Routes that require login */}
                   <Route path="/" element={<HomePage />} />
+                  <Route
+                    path="/notifications"
+                    element={<NotificationsPage />}
+                  />
+
+                  <Route path="/messages" element={<DMsPage />} />
+
+                  <Route path="/lists" element={<ListsPage />} />
+
                   <Route path="/profile" element={<ProfilePage />} />
-                  <Route path="/post" element={<NewPostPopUp />} />
-                  <Route path="/post/:id" element={<SinglePostPage />} />
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route
                     path="/settings/changeusername"
@@ -65,6 +76,11 @@ export default function App() {
                     element={<ChangePassword />}
                   />
                   <Route path="/settings/privacy" element={<Privacy />} />
+
+                  <Route path="/post" element={<NewPostPopUp />} />
+                  <Route path="/post/:id" element={<SinglePostPage />} />
+
+                  <Route path="/verified" element={<VerifiedForm />} />
                 </Routes>
               </div>
               <div className="" style={{ overflowY: "auto" }}>

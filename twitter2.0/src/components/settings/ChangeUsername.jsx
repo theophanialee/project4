@@ -52,39 +52,39 @@ export default function ChangeUsername() {
 
   return (
     <>
+      <h1 className="m-5">Change Username</h1>
       <form className="form-container" onSubmit={handleSubmit}>
-        <h1 className="text-center">Change Username</h1>
         <div className="flex flex-col">
           <label className="mb-1 mt-5">New Username</label>
-          <div className="flex items-center">
-            <div className="pr-2">@</div>
+          <div className="flex">
+            <div className="pr-2 mt-3">@</div>
             <input
-              className="border p-2"
-              type="text"
+              className="border p-2 h-12"
               name="newUsername"
               placeholder="New username"
               ref={newUsernameRef}
               autoComplete="off"
               onChange={handleUsernameChange} // Add the event listener to reset error messages
             />
+            <button
+              type="button"
+              onClick={handleCheckUN}
+              className="bg-purple-950 mx-5"
+            >
+              Check if available
+            </button>
           </div>
         </div>
-        <button
-          type="button"
-          onClick={handleCheckUN}
-          className="bg-purple-950 m-5"
-        >
-          Check if available
-        </button>
+
         {firstCheck ? (
           doesUnExist ? (
-            <div className="text-red-500">Username taken</div>
+            <div className="text-red-500 mt-2">Username taken</div>
           ) : (
-            <div className="text-green-500">Username available!</div>
+            <div className="text-green-500 mt-2">Username available!</div>
           )
         ) : null}
         {isUnValid && (
-          <div className="text-red-700">
+          <div className="text-red-700 mt-2">
             Username has to be longer than 5 characters
           </div>
         )}

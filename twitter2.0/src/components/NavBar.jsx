@@ -16,12 +16,12 @@ export default function NavBar() {
       <div>
         <ul className="space-y-1">
           <img src="./tea.png" className="w-24 h-24 mb-5" alt="Logo" />
-          <li className="NavBarItem py-1 flex items-center">
+          <li className=" py-1 flex items-center">
             <Link to="/" className="flex-1 text-2xl">
               Home
             </Link>
           </li>
-          <li className="NavBarItem py-1 flex items-center">
+          <li className="py-1 flex items-center">
             <Link to="/notifications" className="flex-1 text-2xl">
               Notifications
             </Link>
@@ -59,13 +59,12 @@ export default function NavBar() {
             </Link>
           </div>
         </li>
-        <ul className="space-y-1">
-          <li className="rounded-lg bg-white my-6 p-3 ">
-            <Link to="/reqVerified" className="flex-1 text-2xl text-purple-800">
-              ✓ GET VERIFIED
-            </Link>
-          </li>
-        </ul>
+
+        <Link to="/verified" className="flex-1 text-2xl text-purple-800">
+          <ul className="space-y-1">
+            <li className="rounded-lg bg-white my-6 p-3 ">✓ GET VERIFIED</li>
+          </ul>
+        </Link>
       </div>
       <div className="NavBarItem fixed bottom-0 left-0 w-1/4 h-1/7">
         <ProfileNav />

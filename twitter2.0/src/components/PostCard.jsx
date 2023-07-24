@@ -64,7 +64,7 @@ export default function PostCard({ user, posts }) {
               className="absolute bg-green-500 text-white py-1 px-3 rounded"
               style={{
                 marginTop: "-5.5rem",
-                marginLeft: "10rem",
+                marginLeft: "20rem",
                 width: "120px",
               }}
             >

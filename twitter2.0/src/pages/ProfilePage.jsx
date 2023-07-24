@@ -23,9 +23,25 @@ export default function ProfilePage() {
   }, []);
 
   return (
-    <div className="">
-      <h1 className="text-2xl font-bold p-5">{user.username}</h1>
-      <PostCard user={user} posts={posts} />
-    </div>
+    <>
+      <h1 className="text-2xl font-bold p-5">@{user.username}</h1>
+      <div className="p-5 flex">
+        <div className="flex flex-col w-full">
+          <div className="flex">
+            <div className="flex-1">
+              <span>2</span> Following
+            </div>
+            <div className="flex-1">
+              <span>3</span> Followers
+            </div>
+          </div>
+
+          <div className="mt-5">bio here</div>
+        </div>
+      </div>
+      <div className="">
+        <PostCard user={user} posts={posts} />
+      </div>
+    </>
   );
 }
