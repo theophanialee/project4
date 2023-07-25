@@ -8,6 +8,10 @@ const profileSchema = new mongoose.Schema(
       ref: `User`,
       unique: true,
     },
+    displayname: {
+      type: String,
+      maxlength: 280,
+    },
     displaypic: {
       type: String,
     },

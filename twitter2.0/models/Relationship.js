@@ -2,11 +2,19 @@ import mongoose from "mongoose";
 
 const relationshipSchema = new mongoose.Schema(
   {
-    follower: {
+    followerProfileId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Profile",
+    },
+    followingProfileId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Profile",
+    },
+    followerUserId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    follwing: {
+    followingUserId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },

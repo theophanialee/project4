@@ -1,10 +1,21 @@
+import sendRequest from "../utilities/send-request";
 import "./form.css";
 
 export default function FollowButton({ user, username }) {
-  function handleFollow() {
+  async function handleFollow() {
     console.log(
       `Logged in user ${user.username} wants to follow profile user ${username}`
     );
+    try {
+      const response = await sendRequest(
+        `/api/relationships/createFollower`,
+        "POST",
+        { following: username }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

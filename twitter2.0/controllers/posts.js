@@ -20,7 +20,6 @@ async function createPost(req, res) {
 
 async function getPosts(req, res) {
   const { username } = req.params;
-  console.log(username);
 
   if (!username) {
     res.status(400).json({ message: "Username parameter is missing" });

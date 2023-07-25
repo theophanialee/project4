@@ -22,6 +22,7 @@ import ListsPage from "../ListsPage";
 import DMsPage from "../DMsPage";
 import LandingPage from "../../components/LandingPage";
 import EditProfile from "../../components/settings/EditProfile";
+import FollowingPage from "../FollowingPage";
 
 export const UserContext = createContext();
 export default function App() {
@@ -67,6 +68,11 @@ export default function App() {
                   <Route path="/lists" element={<ListsPage />} />
 
                   <Route path="/profile/:username" element={<ProfilePage />} />
+                  <Route
+                    path="/following/:username/:profileId"
+                    element={<FollowingPage />}
+                  />
+
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route
                     path="/settings/changeusername"

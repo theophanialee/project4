@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
 import profileRoutes from "./routes/profile.js";
+import relationshipRoutes from "./routes/relationship.js";
 import checkToken from "./config/checkToken.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -26,6 +27,8 @@ app.use(checkToken);
 app.use("/api/users", userRoutes);
 app.use("/api/profiles", profileRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/relationships", relationshipRoutes);
+
 
 // app.use("/api/dms", dmRoutes);
 
