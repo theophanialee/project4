@@ -3,7 +3,7 @@ import ".././form.css";
 import { UserContext } from "../../pages/App/App";
 import sendRequest from "../../utilities/send-request";
 
-export default function EditUser() {
+export default function EditProfile() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [displayName, setDisplayName] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);

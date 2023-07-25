@@ -7,12 +7,10 @@ import { getUser } from "../../utilities/users-service";
 import ProfilePage from "../ProfilePage";
 import SettingsPage from "../SettingsPage";
 import ChangeUsername from "../../components/settings/ChangeUsername";
-import EditUser from "../../components/settings/EditUser";
 import ChangePassword from "../../components/settings/ChangePassword";
 import Privacy from "../../components/settings/Privacy";
 import { PopupProvider } from "../../components/PopupContext";
 import HomePage from "../HomePage";
-import PostCard from "../../components/PostCard";
 import "./App.css";
 import SearchBar from "../../components/SearchBar";
 import NewPostPopUp from "../NewPostPopUp";
@@ -23,6 +21,7 @@ import NotificationsPage from "../NotificationsPage";
 import ListsPage from "../ListsPage";
 import DMsPage from "../DMsPage";
 import LandingPage from "../../components/LandingPage";
+import EditProfile from "../../components/settings/EditProfile";
 
 export const UserContext = createContext();
 export default function App() {
@@ -73,7 +72,10 @@ export default function App() {
                     path="/settings/changeusername"
                     element={<ChangeUsername />}
                   />
-                  <Route path="/settings/edituser" element={<EditUser />} />
+                  <Route
+                    path="/settings/editprofile"
+                    element={<EditProfile />}
+                  />
                   <Route
                     path="/settings/changepassword"
                     element={<ChangePassword />}

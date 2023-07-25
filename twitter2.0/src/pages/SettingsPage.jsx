@@ -8,7 +8,7 @@ export default function SettingsPage() {
         <Link to="/settings/changeusername">
           <div className="my-3">Change username</div>
         </Link>
-        <Link to="/settings/edituser">
+        <Link to="/settings/editprofile">
           <div className="my-3">Edit account details</div>
         </Link>
         <Link to="/settings/changepassword">
