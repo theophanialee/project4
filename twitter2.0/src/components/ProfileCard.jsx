@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function FollowProfileCard({ profiles, users }) {
+export default function ProfileCard({ profiles, users }) {
   return (
     <>
       {profiles.map((profile, index) => (

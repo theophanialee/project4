@@ -24,6 +24,7 @@ import LandingPage from "../../components/LandingPage";
 import EditProfile from "../../components/settings/EditProfile";
 import FollowingPage from "../FollowingPage";
 import ReplyPopUp from "../../components/ReplyPopUp";
+import SearchResultPage from "../SearchResultPage";
 
 export const UserContext = createContext();
 export default function App() {
@@ -93,6 +94,11 @@ export default function App() {
                   <Route path="/post/:id" element={<SinglePostPage />} />
 
                   <Route path="/reply/:id" element={<ReplyPopUp />} />
+
+                  <Route
+                    path="/search/:searchQuery"
+                    element={<SearchResultPage />}
+                  />
 
                   <Route path="/verified" element={<VerifiedForm />} />
                 </Routes>

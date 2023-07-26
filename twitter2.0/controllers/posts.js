@@ -1,5 +1,7 @@
 import Post from "../models/Post.js";
 import User from "../models/User.js";
+import Profile from "../models/Profile.js";
+import { profile } from "console";
 
 async function createPost(req, res) {
   try {
@@ -182,6 +184,31 @@ async function addReply(req, res) {
   }
 }
 
+async function searchByUsername(req, res) {
+  const { searchQuery } = req.params;
+
+  console.log("search by username", searchQuery);
+
+  const users = await User.find({
+    username: { $regex: searchQuery, $options: "i" },
+  });
+
+  if (users.length === 0) {
+    return res.status(404).json({ message: "No users found" });
+  }
+
+  const userIds = users.map((user) => user._id);
+  console.log(userIds);
+
+  const profiles = await Profile.find({ user: { $in: userIds } }).populate(
+    "user",
+    "username"
+  );
+  console.log(profiles);
+
+  res.json(profiles);
+}
+
 export {
   createPost,
   getPosts,
@@ -190,4 +217,5 @@ export {
   getOnePost,
   addLike,
   addReply,
+  searchByUsername,
 };
