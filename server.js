@@ -16,8 +16,7 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config();
 const app = express();
-
-
+const PORT = process.env.PORT || 3001;
 // Middleware: Use morgan for logging HTTP requests
 app.use(logger("dev"));
 app.use(express.json());
@@ -42,8 +41,6 @@ app.get("/*", function (req, res) {
 });
 
 
-const PORT = process.env.PORT || 3000
-;
 // Start the server
 app.listen(PORT, function () {
   console.log(`Express/MongoDB running on port ${PORT}`);

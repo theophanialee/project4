@@ -48,7 +48,7 @@ export default function AdminNav() {
           </div>
         </li>
 
-        <Link to="/verified" className="flex-1 text-2xl text-purple-800">
+        <Link to="/requests" className="flex-1 text-2xl text-purple-800">
           <ul className="space-y-1">
             <li className="rounded-lg bg-white my-6 p-3 ">
               ✓ Approve verified requests

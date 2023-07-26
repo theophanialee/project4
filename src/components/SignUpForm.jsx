@@ -23,10 +23,13 @@ export default function SignUpForm() {
       email: e.target.email.value,
       password: e.target.password.value,
       admin: false,
+      verified: false,
+      verifiedReq: "",
     };
-    navigate("/login");
+
     try {
       const user = await signUp(formData);
+      navigate("/");
     } catch {
       setErrorMsg(
         "* Check if username is available * There is an existing account with this email"
@@ -126,8 +129,8 @@ export default function SignUpForm() {
         <button className="bg-purple-500 hover:bg-purple-700 m-5">
           Confirm
         </button>
+        {errorMsg && <p>{errorMsg}</p>}
       </form>
-      {errorMsg && <p>{errorMsg}</p>}
     </>
   );
 }

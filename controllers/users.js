@@ -12,24 +12,26 @@ function createJWT(user) {
   );
 }
 async function createUser(req, res) {
+  console.log("Creating user...");
+  console.log(req.body);
   try {
     // Create a new User document using the model and the request data
     const newUser = await User.create(req.body);
+    console.log("New user created:", newUser);
     const token = createJWT(newUser);
 
     const response = await Profile.create({
-      user: newUser._id, // Include the _id of the newly created User
+      user: newUser._id,
       displaypic: "",
       header: "",
       bio: "",
       birthdate: "",
     });
 
-    // Respond with the newly created user data
-    res.status(201).json(token);
-    console.log(token);
-    console.log(newUser);
+    res.status(201).json("new user created!");
+    console.log("Token sent:", token);
   } catch (error) {
+    console.error("Error creating user:", error);
     res.status(500).json({ error: "Failed to create user" });
   }
 }
@@ -131,7 +133,6 @@ async function editUsername(req, res) {
   }
 }
 
-
 async function changePassword(req, res) {
   try {
     const userId = req.user._id;
@@ -157,6 +158,53 @@ async function changePassword(req, res) {
   }
 }
 
+async function verifiedRequest(req, res) {
+  const { verifiedReq } = req.body;
+  console.log("post to user", verifiedReq);
+
+  try {
+    const user = await User.findById(req.user._id);
+
+    // Check if user's verifiedReq is already filled
+    if (user.verifiedReq !== "") {
+      return res.status(400).json({ message: "Already requested" });
+    }
+
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: req.user._id },
+      { verifiedReq: verifiedReq }
+    );
+
+    if (updatedUser) {
+      res.status(200).json({
+        message: "Request made successfully",
+      });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ message: "An error occurred whilemaking the request" });
+  }
+}
+
+async function getRequests(req, res) {
+  console.log("[admin] get verified requests");
+
+  try {
+    const usersRequested = await User.find({ verifiedReq: { $ne: "" } });
+    console.log(usersRequested);
+    res.json(usersRequested);
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while fetching requests" });
+  }
+}
+
 export {
   createUser,
   getUser,
@@ -165,4 +213,6 @@ export {
   checkToken,
   editUsername,
   changePassword,
+  verifiedRequest,
+  getRequests,
 };

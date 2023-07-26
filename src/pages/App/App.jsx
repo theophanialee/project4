@@ -27,6 +27,7 @@ import ReplyPopUp from "../../components/ReplyPopUp";
 import SearchResultPage from "../SearchResultPage";
 import AdminNav from "../../components/admin/AdminNav";
 import AdminHomePage from "../../components/admin/AdminHomePage";
+import VerifiedRequests from "../../components/admin/VerifiedRequests";
 
 export const UserContext = createContext();
 export default function App() {
@@ -150,12 +151,13 @@ export default function App() {
                     element={<SearchResultPage />}
                   />
 
-                  <Route path="/verified" element={<VerifiedForm />} />
+                  <Route path="/requests" element={<VerifiedRequests />} />
                 </Routes>
               </div>
               <div className="" style={{ overflowY: "auto" }}>
+                {" "}
+                <SearchBar />
                 <div className="w-1/4 h-5/6 fixed bottom-0 right-0 pt-5 px-5 flex justify-cente "></div>
-
                 <div className=""></div>
               </div>
             </>
