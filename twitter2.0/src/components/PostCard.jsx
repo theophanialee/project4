@@ -1,11 +1,13 @@
 import { useState } from "react";
 import getTimeDifference from "./getTimeDiffernce";
 import MoreOptions from "./post/MoreOptions";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import sendRequest from "../utilities/send-request";
+import ReplyPopUp from "./ReplyPopUp";
 
 export default function PostCard({ user, posts }) {
   const [copiedPostId, setCopiedPostId] = useState(null);
+  const navigate = useNavigate();
 
   function handleShare(postId) {
     const postLink = `${window.location.origin}/post/${postId}`;
@@ -24,6 +26,11 @@ export default function PostCard({ user, posts }) {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  function handleReply(postId) {
+    console.log(postId);
+    navigate(`/reply/${postId}`);
   }
 
   return (
@@ -45,7 +52,10 @@ export default function PostCard({ user, posts }) {
 
           <div className="my-2 flex items-center">
             {/* Reply */}
-            <button className="mx-2">🗨</button>
+            <button onClick={() => handleReply(post._id)} className="mx-2">
+              🗨
+            </button>
+
             <div className="mx-3">{post.replies.length}</div>
             {/* Retweet button */}
             <button className="mx-4">↺</button>

@@ -23,6 +23,7 @@ import DMsPage from "../DMsPage";
 import LandingPage from "../../components/LandingPage";
 import EditProfile from "../../components/settings/EditProfile";
 import FollowingPage from "../FollowingPage";
+import ReplyPopUp from "../../components/ReplyPopUp";
 
 export const UserContext = createContext();
 export default function App() {
@@ -90,6 +91,8 @@ export default function App() {
 
                   <Route path="/post" element={<NewPostPopUp />} />
                   <Route path="/post/:id" element={<SinglePostPage />} />
+
+                  <Route path="/reply/:id" element={<ReplyPopUp />} />
 
                   <Route path="/verified" element={<VerifiedForm />} />
                 </Routes>

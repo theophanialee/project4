@@ -88,12 +88,11 @@ async function deletePost(req, res) {
     return res.status(500).json({ error: "Failed to delete post" });
   }
 }
-
 async function getOnePost(req, res) {
   const { id } = req.params; // Use 'req.params' to access the URL parameters
   try {
     // Find the post by its ID in the database
-    const post = await Post.findById(id).populate("user", "username");
+    const post = await Post.findById(id);
 
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
@@ -142,6 +141,40 @@ async function addLike(req, res) {
   }
 }
 
+async function addReply(req, res) {
+  console.log("addreply");
+  const { id } = req.params;
+  console.log(id);
+
+  try {
+    const originalPost = await Post.findById(id);
+
+    if (!originalPost) {
+      return res.status(404).json({ error: "Original post not found" });
+    }
+    const newReply = new Post({
+      user: req.user._id,
+      content: req.body.content,
+      likes: [],
+      reposts: [],
+      replies: [],
+    });
+
+    originalPost.replies.push(newReply.user);
+    console.log("reply user id", newReply.user);
+    await originalPost.save(); // Save the updated original post with the added reply
+
+    // Save the new reply post to the database
+    await newReply.save();
+
+    // Respond with the newly created reply post
+    res.status(201).json(newReply);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+}
+
 export {
   createPost,
   getPosts,
@@ -149,4 +182,5 @@ export {
   deletePost,
   getOnePost,
   addLike,
+  addReply,
 };

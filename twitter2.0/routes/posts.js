@@ -10,6 +10,6 @@ router.delete("/delete/:id", postsController.deletePost);
 router.get("/onePost/:id", postsController.getOnePost);
 router.patch("/like/:id", postsController.addLike);
 // router.patch("/repost/:id", postsController.addRepost);
-// router.patch("/reply/:id", postsController.addReply);
+router.post("/reply/:id", postsController.addReply);
 
 export default router;

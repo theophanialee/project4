@@ -10,5 +10,6 @@ router.get("/checkUn/:username", usersController.checkUn);
 router.post("/login", usersController.login);
 router.get("/check-token", ensureLoggedIn, usersController.checkToken);
 router.patch("/editUsername", usersController.editUsername);
+router.patch("/changePassword", usersController.changePassword);
 
 export default router;

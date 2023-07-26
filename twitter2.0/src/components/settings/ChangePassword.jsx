@@ -1,33 +1,32 @@
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import ".././form.css";
+import sendRequest from "../../utilities/send-request";
 
 export default function ChangePassword() {
   const [errorMsg, setErrorMsg] = useState(null);
-  const oldPasswordRef = useRef(null);
+  const [success, setSuccess] = useState(false);
+  const currentPasswordRef = useRef(null);
   const newPasswordRef = useRef(null);
   const confirmPasswordRef = useRef(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const oldPassword = oldPasswordRef.current.value;
+    const currentPassword = currentPasswordRef.current.value;
     const newPassword = newPasswordRef.current.value;
     const confirmPassword = confirmPasswordRef.current.value;
 
-    // Additional validation if needed
     if (newPassword !== confirmPassword) {
       setErrorMsg("Passwords do not match");
       return;
     }
 
     try {
-      // You can handle the password change logic here
-      // For example, call an API to update the password
-      // or use your existing change password utility function
-      // For demonstration purposes, let's just log the passwords
-      console.log("Old Password:", oldPassword);
-      console.log("New Password:", newPassword);
-      console.log("Confirm Password:", confirmPassword);
-
+      const response = await sendRequest(`/api/users/changePassword`, "PATCH", {
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+      });
+      console.log(response);
+      setSuccess(response);
       setErrorMsg(null); // Reset error message
     } catch {
       setErrorMsg("Password Change Failed - Try Again");
@@ -44,7 +43,7 @@ export default function ChangePassword() {
             className="border p-2"
             type="password"
             name="oldPassword"
-            ref={oldPasswordRef}
+            ref={currentPasswordRef}
             autoComplete="current-password"
           />
         </div>
@@ -68,11 +67,12 @@ export default function ChangePassword() {
             autoComplete="new-password"
           />
         </div>
-        <button className="bg-purple-500 hover:bg-purple-700 m-5">
+        <button type="submit" className="bg-purple-500 hover:bg-purple-700 m-5">
           Change Password
         </button>
+        {errorMsg && <div className="text-red-500">{errorMsg}</div>}
+        {success && <div className="text-green-500">{success}</div>}
       </form>
-      {errorMsg && <p>{errorMsg}</p>}
     </>
   );
 }

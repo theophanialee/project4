@@ -131,4 +131,38 @@ async function editUsername(req, res) {
   }
 }
 
-export { createUser, getUser, checkUn, login, checkToken, editUsername };
+
+async function changePassword(req, res) {
+  try {
+    const userId = req.user._id;
+    console.log(userId);
+    const user = await User.findById(userId);
+    console.log(user);
+    console.log("body", req.body);
+    const match = await bcrypt.compare(req.body.currentPassword, user.password);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    if (!match) {
+      res.status(401).json({ message: "Incorrect password" });
+    }
+    if (match) {
+      const newPassword = req.body.newPassword;
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      await User.updateOne({ _id: userId }, { password: hashedPassword });
+      res.json("Successfully updated password");
+    }
+  } catch (err) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+export {
+  createUser,
+  getUser,
+  checkUn,
+  login,
+  checkToken,
+  editUsername,
+  changePassword,
+};

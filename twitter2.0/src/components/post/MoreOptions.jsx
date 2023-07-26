@@ -23,7 +23,7 @@ export default function MoreOptions({ post }) {
       await sendRequest(`/api/posts/delete/${post._id}`, "DELETE");
       // Optionally, you can update the UI to reflect the deleted post
       console.log("Post deleted successfully");
-      navigate("/profile");
+      navigate(`/profile/${post.user.username}`);
     } catch (error) {
       console.log("Error deleting post:", error);
     }
