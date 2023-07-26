@@ -46,7 +46,6 @@ async function getPosts(req, res) {
   }
 }
 
-
 async function getFollowingPosts(req, res) {
   if (!req.user) {
     res.status(401).json({ message: "Not logged in" });
@@ -92,7 +91,15 @@ async function getOnePost(req, res) {
   const { id } = req.params; // Use 'req.params' to access the URL parameters
   try {
     // Find the post by its ID in the database
-    const post = await Post.findById(id);
+    const post = await Post.findById(id)
+      .populate("user", "username")
+      .populate({
+        path: "replies",
+        populate: {
+          path: "user",
+          select: "username",
+        },
+      });
 
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
@@ -160,8 +167,8 @@ async function addReply(req, res) {
       replies: [],
     });
 
-    originalPost.replies.push(newReply.user);
-    console.log("reply user id", newReply.user);
+    originalPost.replies.push(newReply._id);
+    console.log("reply user id", newReply._id);
     await originalPost.save(); // Save the updated original post with the added reply
 
     // Save the new reply post to the database
