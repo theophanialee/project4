@@ -48,7 +48,7 @@ async function getAllFollowingById(req, res) {
   console.log("profileId", profileId);
 
   try {
-    const data = await Relationship.find({})
+    const data = await Relationship.find({ followerProfileId: profileId })
       .populate("followingUserId")
       .populate("followingProfileId");
 
@@ -60,23 +60,25 @@ async function getAllFollowingById(req, res) {
 
     // console.log("filteredData", filteredData);
 
-    const followingProfiles = data.map((relationship) => ({
-      _id: relationship.followingProfileId._id,
-      displayname: relationship.followingProfileId.displayname,
-      displaypic: relationship.followingProfileId.displaypic,
-      bio: relationship.followingProfileId.bio,
-      birthdate: relationship.followingProfileId.birthdate,
-    }));
+    // const followingProfiles = data.map((relationship) => ({
+    //   _id: relationship.followingProfileId._id,
+    //   displayname: relationship.followingProfileId.displayname,
+    //   displaypic: relationship.followingProfileId.displaypic,
+    //   bio: relationship.followingProfileId.bio,
+    //   birthdate: relationship.followingProfileId.birthdate,
+    // }));
 
-    const followingUsers = data.map((relationship) => ({
-      _id: relationship.followingUserId._id,
-      username: relationship.followingUserId.username,
-    }));
+    // const followingUsers = data.map((relationship) => ({
+    //   _id: relationship.followingUserId._id,
+    //   username: relationship.followingUserId.username,
+    // }));
 
-    console.log("Following Profiles:", followingProfiles);
-    console.log("Following Users:", followingUsers);
+    // console.log("Following Profiles:", followingProfiles);
+    // console.log("Following Users:", followingUsers);
 
-    res.status(200).json({ followingProfiles, followingUsers });
+    console.log(data);
+
+    res.status(200).json(data);
   } catch (error) {
     console.error("Error in getAllFollowingData:", error);
   }

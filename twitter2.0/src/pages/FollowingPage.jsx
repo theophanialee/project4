@@ -15,10 +15,8 @@ export default function FollowingPage() {
       const followingArray = await sendRequest(
         `/api/relationships/getFollowing/${profileId}`
       );
-      console.log(followingArray.followingProfiles);
-      console.log(followingArray.followingUsers);
-      setProfiles(followingArray.followingProfiles);
-      setUsers(followingArray.followingUsers);
+      console.log(followingArray);
+      setProfiles(followingArray);
     } catch (error) {
       console.log(error);
     }
@@ -31,7 +29,7 @@ export default function FollowingPage() {
   return (
     <>
       <h1 className="m-5">Following Page</h1>
-      <ProfileCard users={users} profiles={profiles} />
+      {/* <ProfileCard users={users} profiles={profiles} /> */}
     </>
   );
 }

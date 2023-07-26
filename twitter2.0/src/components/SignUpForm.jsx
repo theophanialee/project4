@@ -22,6 +22,7 @@ export default function SignUpForm() {
       normalizedUsername: e.target.username.value.toLowerCase(),
       email: e.target.email.value,
       password: e.target.password.value,
+      admin: false,
     };
     navigate("/login");
     try {

@@ -25,10 +25,13 @@ import EditProfile from "../../components/settings/EditProfile";
 import FollowingPage from "../FollowingPage";
 import ReplyPopUp from "../../components/ReplyPopUp";
 import SearchResultPage from "../SearchResultPage";
+import AdminNav from "../../components/admin/AdminNav";
+import AdminHomePage from "../../components/admin/AdminHomePage";
 
 export const UserContext = createContext();
 export default function App() {
   const [user, setUser] = useState(getUser());
+  console.log(user);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
@@ -48,7 +51,7 @@ export default function App() {
           </>
         )}
         <div className="flex flex-wrap">
-          {user && (
+          {user && user.admin === false && (
             <>
               <aside className="w-1/4 h-7/8 fixed left-0 top-0 h-screen bg-purple-950">
                 <NavBar />
@@ -111,6 +114,49 @@ export default function App() {
                 <div className="">
                   <Trends />
                 </div>
+              </div>
+            </>
+          )}
+
+          {user && user.admin === true && (
+            <>
+              <aside className="w-1/4 h-7/8 fixed left-0 top-0 h-screen bg-purple-950">
+                <AdminNav />
+              </aside>
+              <div
+                className="main-container w-2/4 fixed top-0 h-screen"
+                style={{ left: "25%", overflowY: "auto" }}
+              >
+                <Routes>
+                  {/* Routes that require login */}
+                  <Route path="/" element={<AdminHomePage />} />
+                  <Route path="/settings" element={<SettingsPage />} />
+                  <Route
+                    path="/settings/changeusername"
+                    element={<ChangeUsername />}
+                  />
+                  <Route
+                    path="/settings/editprofile"
+                    element={<EditProfile />}
+                  />
+                  <Route
+                    path="/settings/changepassword"
+                    element={<ChangePassword />}
+                  />
+                  <Route path="/settings/privacy" element={<Privacy />} />
+
+                  <Route
+                    path="/search/:searchQuery"
+                    element={<SearchResultPage />}
+                  />
+
+                  <Route path="/verified" element={<VerifiedForm />} />
+                </Routes>
+              </div>
+              <div className="" style={{ overflowY: "auto" }}>
+                <div className="w-1/4 h-5/6 fixed bottom-0 right-0 pt-5 px-5 flex justify-cente "></div>
+
+                <div className=""></div>
               </div>
             </>
           )}
