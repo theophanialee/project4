@@ -25,9 +25,9 @@ export default function AdminNav() {
           </li>
 
           <li className="NavBarItem py-1 flex items-center">
-            <Link to={`/profile/${user.username}`} className="flex-1 text-2xl">
+            {/* <Link to={`/profile/${user.username}`} className="flex-1 text-2xl">
               Profile
-            </Link>
+            </Link> */}
           </li>
           <li className="NavBarItem py-1 flex items-center">
             <Link to="/settings" className="flex-1 text-2xl">
@@ -37,14 +37,14 @@ export default function AdminNav() {
         </ul>
         <li className="NavBarItem py-1 flex items-center">
           <div className="flex justify-center items-center w-full">
-            <Link to="/post">
+            {/* <Link to="/post">
               <button
                 onClick={handleNewClick}
                 className="bg-purple-600 rounded-full w-28 mt-5 text-2xl w-full px-24 hover:bg-purple-400 hover:text-white"
               >
                 Spill!
               </button>
-            </Link>
+            </Link> */}
           </div>
         </li>
 

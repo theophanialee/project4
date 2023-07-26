@@ -165,7 +165,12 @@ async function verifiedRequest(req, res) {
   try {
     const user = await User.findById(req.user._id);
 
-    // Check if user's verifiedReq is already filled
+    //1. check if user already verified
+    if (user.verified === true) {
+      return res.status(400).json({ message: "Already a verified user" });
+    }
+
+    // 2. Check if user verifiedReq is already filled
     if (user.verifiedReq !== "") {
       return res.status(400).json({ message: "Already requested" });
     }
@@ -205,6 +210,30 @@ async function getRequests(req, res) {
   }
 }
 
+async function approveRequest(req, res) {
+  const { userId } = req.params;
+
+  try {
+    console.log("[admin] approve requests for userId", userId);
+
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: userId },
+      { verifiedReq: "", verified: true },
+      { new: true } // This option will return the updated user instead of the old one
+    );
+    if (updatedUser) {
+      console.log(updatedUser);
+    } else if (updatedUser.verified === false) {
+      console.log("User not found or error in update");
+    }
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while fetching requests" });
+  }
+}
+
 export {
   createUser,
   getUser,
@@ -215,4 +244,5 @@ export {
   changePassword,
   verifiedRequest,
   getRequests,
+  approveRequest,
 };

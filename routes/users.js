@@ -13,5 +13,6 @@ router.patch("/editUsername", usersController.editUsername);
 router.patch("/changePassword", usersController.changePassword);
 router.patch("/requestverified", usersController.verifiedRequest);
 router.get("/admin/getrequests", usersController.getRequests);
+router.patch("/admin/approveverified/:userId", usersController.approveRequest);
 
 export default router;

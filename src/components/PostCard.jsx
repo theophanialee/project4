@@ -37,40 +37,48 @@ export default function PostCard({ user, posts }) {
     <>
       {posts.map((post) => (
         <div key={post._id} className="my-1 px-5 py-2 bg-neutral-900">
-          <Link to={`/profile/${post.user.username}`}>
-            <div className="my-2 text-xl">@{post.user.username}</div>
-          </Link>
-          <div className="flex justify-between">
-            <Link to={`/post/${post._id}`}>
-              <div className="py-2">{post.content}</div>
+          {/* First Row */}
+          <div className="flex justify-between items-center">
+            <Link to={`/profile/${post.user.username}`}>
+              <div className="text-xl">@{post.user.username}</div>
             </Link>
-            <div className="my-2 text-xs">
-              {getTimeDifference(post.createdAt)}
-              {post.user._id === user._id && <MoreOptions post={post} />}
-            </div>
+            <div className="text-xs">{getTimeDifference(post.createdAt)}</div>
           </div>
 
+          {/* Second Row */}
+          <div className="text-right">
+            {post.user._id === user._id && <MoreOptions post={post} />}
+          </div>
+
+          {/* Third Row */}
+          <Link to={`/post/${post._id}`}>
+            <div className="py-2">{post.content}</div>
+          </Link>
+
+          {/* Fourth Row */}
           <div className="my-2 flex items-center">
             {/* Reply */}
             <button onClick={() => handleReply(post._id)} className="mx-2">
               🗨
             </button>
-
             <div className="mx-3">{post.replies.length}</div>
+
             {/* Retweet button */}
             <button className="mx-4">↺</button>
             <div className="mx-2">{post.reposts.length}</div>
+
             {/* Like button */}
             <button onClick={() => handleLike(post._id)} className="mx-4">
               {post.likes.includes(user._id) ? "♥" : "♡"}
             </button>
             <div className="mx-2">{post.likes.length}</div>
+
             {/* Share button */}
             <button onClick={() => handleShare(post._id)} className="mx-4">
               ⇧
             </button>
-            {/* Use the MoreOptions component and pass the post object */}
           </div>
+
           {copiedPostId === post._id && (
             <div
               className="absolute bg-green-500 text-white py-1 px-3 rounded"
