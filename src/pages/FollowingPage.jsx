@@ -9,14 +9,24 @@ export default function FollowingPage() {
   const profileId = params.profileId;
   const [profiles, setProfiles] = useState([]);
   const [users, setUsers] = useState([]);
+  const [following, setFollowing] = useState();
 
   async function getFollowing() {
     try {
       const followingArray = await sendRequest(
         `/api/relationships/getFollowing/${profileId}`
       );
-      console.log(followingArray);
-      setProfiles(followingArray);
+      const followingProfilesArray = followingArray.map(
+        (following) => following.followingProfileId
+      );
+      setProfiles(followingProfilesArray);
+      console.log(followingProfilesArray);
+      const followingUsersArray = followingArray.map(
+        (following) => following.followingProfileId.user
+      );
+      setUsers(followingUsersArray);
+      console.log(followingUsersArray);
+      setFollowing(true);
     } catch (error) {
       console.log(error);
     }
@@ -29,7 +39,7 @@ export default function FollowingPage() {
   return (
     <>
       <h1 className="m-5">Following Page</h1>
-      {/* <ProfileCard users={users} profiles={profiles} /> */}
+      <ProfileCard users={users} profiles={profiles} following={following} />
     </>
   );
 }

@@ -29,9 +29,7 @@ async function createFollower(req, res) {
     }
 
     const response = await Relationship.create({
-      followingUserId: followingUserId,
       followingProfileId: followingProfileId,
-      followerUserId: req.user._id,
       followerProfileId: followerProfileId,
     });
 
@@ -48,9 +46,15 @@ async function getAllFollowingById(req, res) {
   console.log("profileId", profileId);
 
   try {
-    const data = await Relationship.find({ followerProfileId: profileId })
-      .populate("followingUserId")
-      .populate("followingProfileId");
+    const followingProfiles = await Relationship.find({
+      followerProfileId: profileId,
+    }).populate({
+      path: "followingProfileId",
+      populate: {
+        path: "user",
+        select: "username",
+      },
+    });
 
     // console.log(data);
 
@@ -76,9 +80,9 @@ async function getAllFollowingById(req, res) {
     // console.log("Following Profiles:", followingProfiles);
     // console.log("Following Users:", followingUsers);
 
-    console.log(data);
+    console.log(followingProfiles);
 
-    res.status(200).json(data);
+    res.status(200).json(followingProfiles);
   } catch (error) {
     console.error("Error in getAllFollowingData:", error);
   }

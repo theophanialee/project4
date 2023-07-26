@@ -27,35 +27,62 @@ export default function VerifiedForm() {
     }
   }
 
-  return (
-    <>
-      <form className="form-container" onSubmit={handleSubmit}>
-        <h1 className="text-center">✓ Get verified today!</h1>
+  if (user.verifiedReq === "" && user.verified === false) {
+    return (
+      <>
+        <form className="form-container" onSubmit={handleSubmit}>
+          <h1 className="text-center">✓ Get verified today!</h1>
 
-        <div className="flex flex-col mt-10">
-          <div className="mb-10">
-            <div className="text-2xl"> Benefits </div>
-            <ul>
-              <li>• Increase character limit to 420</li>
-              <li>• Prioritized posts to your followers</li>
-              <li>• Get recommended!</li>
-            </ul>
+          <div className="flex flex-col mt-10">
+            <div className="mb-10">
+              <div className="text-2xl"> Benefits </div>
+              <ul>
+                <li>• Increase character limit to 420</li>
+                <li>• Prioritized posts to your followers</li>
+                <li>• Get recommended!</li>
+              </ul>
+            </div>
+            <div>
+              <div className="text-2xl"> Price </div>
+              <div>Free for the first month</div>
+            </div>
+            <div className="mt-10">
+              <div className="text-2xl"> Let us know!</div>
+            </div>
+            <label className="mb-1 mt-2">Reason for verified account:</label>
+            <input className="border p-2" ref={reason} />
           </div>
-          <div>
-            <div className="text-2xl"> Price </div>
-            <div>Free for the first month</div>
-          </div>
-          <div className="mt-10">
-            <div className="text-2xl"> Let us know!</div>
-          </div>
-          <label className="mb-1 mt-2">Reason for verified account:</label>
-          <input className="border p-2" ref={reason} />
+          <button className="bg-purple-500 hover:bg-purple-700 my-10">
+            Request
+          </button>
+          {errorMsg && <div className="text-red-500">Already requested!</div>}
+        </form>
+      </>
+    );
+  } else if (user.verifiedReq === "" && user.verified === true) {
+    return (
+      <div className="flex flex-col justify-center items-center h-screen">
+        <h1 className="text-center m-5"> Already a verified profile!</h1>
+        <div className="m-5 text-center">
+          <div className="text-2xl"> You can now enjoy your benefits </div>
+          <ul>
+            <li>• Increase character limit to 420</li>
+            <li>• Prioritized posts to your followers</li>
+            <li>• Get recommended!</li>
+          </ul>
         </div>
-        <button className="bg-purple-500 hover:bg-purple-700 my-10">
-          Request
-        </button>
-        {errorMsg && <div className="text-red-500">Already requested!</div>}
-      </form>
-    </>
-  );
+      </div>
+    );
+  } else if (user.verifiedReq !== "" && user.verified === false) {
+    return (
+      <div className="flex flex-col justify-center items-center h-screen">
+        <h1 className="text-center m-5"> Pending verified approval.</h1>
+        <div className="text-center m-5">
+          Please email admin@teater.com for status updates if urgent.
+        </div>
+      </div>
+    );
+  } else {
+    return null;
+  }
 }

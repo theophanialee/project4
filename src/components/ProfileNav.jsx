@@ -46,7 +46,7 @@ export default function ProfileNav() {
           type="button"
           onClick={toggleDropdown}
         >
-          {user.username}
+          {user.username} {user.verified === true && <p>✓</p>}
         </div>
         {/* Dropdown menu */}
         <div

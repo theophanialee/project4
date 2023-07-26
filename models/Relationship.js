@@ -10,14 +10,6 @@ const relationshipSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Profile",
     },
-    followerUserId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-    followingUserId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
   },
   {
     timestamps: true,
