@@ -16,7 +16,7 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 // Middleware: Use morgan for logging HTTP requests
 app.use(logger("dev"));
@@ -29,8 +29,10 @@ app.use("/api/profiles", profileRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/relationships", relationshipRoutes);
 
-
-// app.use("/api/dms", dmRoutes);
+// Configure both serve-favicon & static middleware
+// to serve from the production 'dist' folder
+// app.use(favicon(path.join(__dirname, 'dist', 'favicon.ico')));
+app.use(express.static(path.join(__dirname, "dist")));
 
 // Catch all
 // The following "catch all" route (note the *) is necessary
