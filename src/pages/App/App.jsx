@@ -32,7 +32,6 @@ import VerifiedRequests from "../../components/admin/VerifiedRequests";
 export const UserContext = createContext();
 export default function App() {
   const [user, setUser] = useState(getUser());
-  console.log(user);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

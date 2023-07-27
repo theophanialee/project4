@@ -10,6 +10,7 @@ export default function SignUpForm() {
   const [firstCheck, setFirstCheck] = useState(false);
   const usernameRef = useRef(null);
   const navigate = useNavigate();
+  const [successMsg, setSuccessMsg] = useState(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -29,7 +30,8 @@ export default function SignUpForm() {
 
     try {
       const user = await signUp(formData);
-      navigate("/");
+      setSuccessMsg("Sign up successful! Please wait...");
+      setTimeout(() => navigate("/"), 2000);
     } catch {
       setErrorMsg(
         "* Check if username is available * There is an existing account with this email"
@@ -130,6 +132,7 @@ export default function SignUpForm() {
           Confirm
         </button>
         {errorMsg && <p>{errorMsg}</p>}
+        {successMsg && <p className="text-green-500">{successMsg}</p>}
       </form>
     </>
   );
