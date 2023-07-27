@@ -26,7 +26,7 @@ export default function LoginForm() {
       setTimeout(() => {
         setUser(existingUser);
         navigate("/");
-      }, 2000);
+      }, 4000);
     } catch {
       setErrorMsg("Log In Failed - Try Again");
     }

@@ -31,7 +31,7 @@ export default function SignUpForm() {
     try {
       const user = await signUp(formData);
       setSuccessMsg("Sign up successful! Please wait...");
-      setTimeout(() => navigate("/"), 2000);
+      setTimeout(() => navigate("/"), 4000);
     } catch {
       setErrorMsg(
         "* Check if username is available * There is an existing account with this email"
