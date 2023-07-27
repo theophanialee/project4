@@ -84,12 +84,12 @@ export default function ProfilePage() {
           <div className="flex text-lg">
             <div className="flex-1 px-5">
               <Link to={`/following/${username}/${profile._id}`}>
-                <span>2</span> Following
+                <span></span> Following
               </Link>
             </div>
             <div className="flex-1 px-5">
               <Link to={`/followers/${username}/${profile._id}`}>
-                <span>3</span> Followers
+                <span></span> Followers
               </Link>
             </div>
           </div>
