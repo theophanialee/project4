@@ -39,6 +39,7 @@ export default function ProfilePage() {
     }
   }
 
+
   async function checkFollowing() {
     try {
       const isFollowingData = await sendRequest(
@@ -73,6 +74,7 @@ export default function ProfilePage() {
 
   return (
     <>
+      {loading && <div>Loading...</div>}
       <div className="p-5 flex flex-col">
         <h1 className="text-2xl font-bold">{profile.displayname}</h1>
         <h1 className="text-sm font-bold">@{username}</h1>
