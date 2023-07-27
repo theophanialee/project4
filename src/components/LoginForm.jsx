@@ -48,7 +48,8 @@ export default function LoginForm() {
             type="text"
             name="username"
             ref={usernameRef}
-            autoComplete="username"
+            placeholder="Username or email"
+            defaultValue=""
           />
         </div>
         <div className="flex flex-col">
@@ -57,7 +58,8 @@ export default function LoginForm() {
             className="border p-2"
             type="password"
             name="password"
-            autoComplete="current-password"
+            placeholder="Password"
+            defaultValue=""
           />
         </div>
         <button

@@ -4,6 +4,7 @@ import sendRequest from "../../utilities/send-request";
 
 export default function VerifiedRequests() {
   const [userReqs, setUserReqs] = useState([]);
+  const [successMsg, setSuccessMsg] = useState(null);
 
   async function getRequests() {
     try {
@@ -27,6 +28,7 @@ export default function VerifiedRequests() {
     <>
       <h1 className="m-5"> ✓ Requests to be approved</h1>
       <RequestCard userReqs={userReqs} />
+      {successMsg && <div>Successfully approved!</div>}
     </>
   );
 }

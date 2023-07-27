@@ -3,6 +3,7 @@ import sendRequest from "../utilities/send-request";
 import { useEffect, useState } from "react";
 import ProfileCard from "../components/ProfileCard";
 import PostCard from "../components/PostCard";
+import SearchProfileResultCard from "../components/SearchProfileResultCard";
 
 export default function SearchResultPage() {
   const [errMsgProfile, setErrMsgProfile] = useState(false);
@@ -48,15 +49,16 @@ export default function SearchResultPage() {
   return (
     <>
       <h1 className="m-5">Search result for "{searchQuery}"</h1>
+      <div className="m-5 text-sm">Users results</div>
       {errMsgProfile ? (
         <div className="m-5">No user found for "{searchQuery}"</div>
       ) : (
-        <ProfileCard
+        <SearchProfileResultCard
           profiles={userResults}
           users={userResults.map((profile) => profile.user)}
         />
       )}
-
+      <div className="m-5 text-sm">Posts results</div>
       {errMsgTag ? (
         <div className="m-5">No post found for "{searchQuery}"</div>
       ) : (
@@ -64,7 +66,7 @@ export default function SearchResultPage() {
           <PostCard
             user={tagResults.map((post) => post.user)}
             posts={tagResults}
-          />{" "}
+          />
         </>
       )}
     </>

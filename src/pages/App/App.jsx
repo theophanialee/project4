@@ -28,6 +28,8 @@ import SearchResultPage from "../SearchResultPage";
 import AdminNav from "../../components/admin/AdminNav";
 import AdminHomePage from "../../components/admin/AdminHomePage";
 import VerifiedRequests from "../../components/admin/VerifiedRequests";
+import FollowersPage from "../FollowersPage";
+import ErrorPage from "../../components/ErrorPage";
 
 export const UserContext = createContext();
 export default function App() {
@@ -46,6 +48,8 @@ export default function App() {
                 <Route path="/" element={<LoginPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignUpPage />} />
+
+                <Route path="*" element={<ErrorPage />} />
               </Routes>
             </aside>
           </>
@@ -79,6 +83,11 @@ export default function App() {
                     element={<FollowingPage />}
                   />
 
+                  <Route
+                    path="/followers/:username/:profileId"
+                    element={<FollowersPage />}
+                  />
+
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route
                     path="/settings/changeusername"
@@ -105,6 +114,7 @@ export default function App() {
                   />
 
                   <Route path="/verified" element={<VerifiedForm />} />
+                  <Route path="*" element={<ErrorPage />} />
                 </Routes>
               </div>
               <div className="" style={{ overflowY: "auto" }}>
@@ -152,6 +162,7 @@ export default function App() {
                   />
 
                   <Route path="/requests" element={<VerifiedRequests />} />
+                  <Route path="*" element={<ErrorPage />} />
                 </Routes>
               </div>
               <div className="" style={{ overflowY: "auto" }}>

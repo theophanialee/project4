@@ -1,9 +1,7 @@
 import { useState } from "react";
 import sendRequest from "../../utilities/send-request";
 
-export default function RequestCard({ userReqs }) {
-  const [success, setSuccess] = useState(false);
-
+export default function RequestCard({ userReqs, setSuccessMsg }) {
   async function handleApproval(userId) {
     console.log("approve req for", userId);
     try {
@@ -12,8 +10,7 @@ export default function RequestCard({ userReqs }) {
         "PATCH"
       );
       console.log(approve);
-      setSuccess(true);
-      window.alert("Successfully approved! Refresh to update requests.");
+      setSuccessMsg(true);
     } catch (error) {
       console.log("error in approval");
     }

@@ -9,6 +9,10 @@ router.get(
   "/getFollowing/:profileId",
   relationshipsController.getAllFollowingById
 );
+router.get(
+  "/getFollowers/:profileId",
+  relationshipsController.getAllFollowersById
+);
 router.delete("/deleteFollower", relationshipsController.deleteFollower);
 router.get(
   "/checkFollowing/:username",

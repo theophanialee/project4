@@ -9,7 +9,7 @@ export default function VerifiedForm() {
   const [errorMsg, setErrorMsg] = useState(null);
   const reason = useRef(null);
   const { user, setUser } = useContext(UserContext);
-  const [succcessMsg,  setSuccessMsg]  = useState(null);
+  const [successMsg, setSuccessMsg] = useState(null);
 
   async function handleSubmit(e) {
     e.preventDefault();

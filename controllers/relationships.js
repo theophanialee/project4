@@ -63,6 +63,30 @@ async function getAllFollowingById(req, res) {
   }
 }
 
+
+async function getAllFollowersById(req, res) {
+  const { profileId } = req.params;
+  console.log("profileId", profileId);
+
+  try {
+    const followerProfiles = await Relationship.find({
+      followingProfileId: profileId,
+    }).populate({
+      path: "followerProfileId",
+      populate: {
+        path: "user",
+        select: "username",
+      },
+    });
+    console.log(followerProfiles);
+
+    res.status(200).json(followerProfiles);
+  } catch (error) {
+    console.error("Error in getAllFollowersById:", error);
+    res.status(500).json({ error: "Failed to fetch followers data" });
+  }
+}
+
 async function deleteFollower(req, res) {
   try {
     const followingUser = await User.findOne({ username: req.body.following });
@@ -116,6 +140,7 @@ async function checkFollowingByUsername(req, res) {
 export {
   createFollower,
   getAllFollowingById,
+  getAllFollowersById,
   deleteFollower,
   checkFollowingByUsername,
 };

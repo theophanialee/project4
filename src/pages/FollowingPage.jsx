@@ -9,7 +9,7 @@ export default function FollowingPage() {
   const profileId = params.profileId;
   const [profiles, setProfiles] = useState([]);
   const [users, setUsers] = useState([]);
-  const [isFollowing, setIsFollowing] = useState(true);
+  const [isFollowing, setIsFollowing] = useState([]);
 
   async function getFollowing() {
     try {
@@ -26,8 +26,9 @@ export default function FollowingPage() {
       );
       setUsers(followingUsersArray);
       console.log(followingUsersArray);
-      setIsFollowing(true);
-      console.log(isFollowing);
+      const followingStatusArray = followingUsersArray.map(() => true);
+      setIsFollowing(followingStatusArray);
+      console.log(followingStatusArray);
     } catch (error) {
       console.log(error);
     }

@@ -131,7 +131,7 @@ export default function SignUpForm() {
         <button className="bg-purple-500 hover:bg-purple-700 m-5">
           Confirm
         </button>
-        {errorMsg && <p>{errorMsg}</p>}
+        {errorMsg && <p className="text-red-500">{errorMsg}</p>}
         {successMsg && <p className="text-green-500">{successMsg}</p>}
       </form>
     </>

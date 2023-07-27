@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import sendRequest from "../utilities/send-request";
+import { Link } from "react-router-dom";
 
 export default function Trends() {
   const [trends, setTrends] = useState([]);
@@ -26,7 +27,7 @@ export default function Trends() {
         <div className="">
           {trends.map((trend, index) => (
             <div key={index} className="px-6 py-2 border-b border-neutral-800">
-              {trend}
+              <Link to={`/search/${trend.substring(1)}`}> {trend} </Link>
             </div>
           ))}
         </div>

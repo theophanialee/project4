@@ -17,7 +17,7 @@ export default function NavBar() {
     <div className="nav-bar p-10 flex flex-col justify-between h-screen">
       <div>
         <ul className="space-y-1">
-          <img src="./tea.png" className="w-24 h-24 mb-5" alt="Logo" />
+          <img src="/tea.png" className="w-24 h-24 mb-5" alt="Logo" />
           <li className=" py-1 flex items-center">
             <Link to="/" className="flex-1 text-2xl">
               Home
