@@ -10,7 +10,7 @@ export default function ProfilePage() {
   const [posts, setPosts] = useState([]);
   const [profile, setProfile] = useState({});
   const [isFollowing, setIsFollowing] = useState();
-
+  const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
   const { username } = useParams();
 
@@ -52,9 +52,17 @@ export default function ProfilePage() {
   }
 
   useEffect(() => {
-    getPosts();
-    getProfile();
-    checkFollowing();
+    setLoading(true);
+
+    // Use Promise.all to wait for all asynchronous calls to finish
+    Promise.all([getPosts(), getProfile(), checkFollowing()])
+      .then(() => {
+        setLoading(false); // set loading to false when all calls are done
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false); // set loading to false in case of errors
+      });
   }, [username]);
 
   const formatDate = (dateString) => {

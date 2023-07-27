@@ -20,7 +20,9 @@ export default function VerifiedForm() {
         "/api/users/requestverified",
         "PATCH",
         { verifiedReq: verifiedReq }
-        setSuccessMsg ('Requested sent! Please be patient while we review your request!')
+      );
+      setSuccessMsg(
+        "Requested sent! Please be patient while we review your request!"
       );
       console.log("reponse", response);
     } catch (error) {
