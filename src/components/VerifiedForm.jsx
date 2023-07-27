@@ -9,6 +9,7 @@ export default function VerifiedForm() {
   const [errorMsg, setErrorMsg] = useState(null);
   const reason = useRef(null);
   const { user, setUser } = useContext(UserContext);
+  const [succcessMsg,  setSuccessMsg]  = useState(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -19,6 +20,7 @@ export default function VerifiedForm() {
         "/api/users/requestverified",
         "PATCH",
         { verifiedReq: verifiedReq }
+        setSuccessMsg ('Requested sent! Please be patient while we review your request!')
       );
       console.log("reponse", response);
     } catch (error) {
@@ -56,6 +58,7 @@ export default function VerifiedForm() {
             Request
           </button>
           {errorMsg && <div className="text-red-500">Already requested!</div>}
+          {successMsg && <div className="text-green-500">{successMsg}</div>}
         </form>
       </>
     );
