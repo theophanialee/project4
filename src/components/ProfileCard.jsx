@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import FollowButton from "./FollowButton";
 
-export default function ProfileCard({ profiles, users, following }) {
-  
- 
+export default function ProfileCard({ profiles, users, isFollowing }) {
   return (
     <>
       {profiles.map((profile, index) => (
@@ -11,7 +9,12 @@ export default function ProfileCard({ profiles, users, following }) {
           <div className="flex justify-between items-center">
             <div>{profile.displayname}</div>
             <div>
-              {following && <FollowButton username={users[index].username} />}
+              {isFollowing && (
+                <FollowButton
+                  isFollowing={isFollowing}
+                  username={users[index].username}
+                />
+              )}
             </div>
           </div>
           <Link to={`/profile/${users[index].username}`}>

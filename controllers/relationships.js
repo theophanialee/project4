@@ -55,7 +55,6 @@ async function getAllFollowingById(req, res) {
         select: "username",
       },
     });
-
     console.log(followingProfiles);
 
     res.status(200).json(followingProfiles);
@@ -64,8 +63,59 @@ async function getAllFollowingById(req, res) {
   }
 }
 
-// async function deleteFollower(res, req) {
-//   console.log(req.body);
-// }
+async function deleteFollower(req, res) {
+  try {
+    const followingUser = await User.findOne({ username: req.body.following });
+    const followingUserId = followingUser._id.toString();
+    const followingProfile = await Profile.findOne({ user: followingUserId });
+    const followingProfileId = followingProfile._id;
 
-export { createFollower, getAllFollowingById,  };
+    const followerProfile = await Profile.findOne({ user: req.user._id });
+    const followerProfileId = followerProfile._id;
+
+    const deletedRelationship = await Relationship.findOneAndDelete({
+      followerProfileId: followerProfileId,
+      followingProfileId: followingProfileId,
+    });
+    if (!deletedRelationship) {
+      return res.status(404).json({ error: "Relationship not found" });
+    }
+    res.status(200).json({ message: "Relationship deleted" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to delete relationship" });
+  }
+}
+async function checkFollowingByUsername(req, res) {
+  console.log("checkFollowing?", req.params);
+  try {
+    const followingUser = await User.findOne({ username: req.params.username });
+    const followingUserId = followingUser._id.toString();
+    const followingProfile = await Profile.findOne({ user: followingUserId });
+    const followingProfileId = followingProfile._id;
+
+    const followerProfile = await Profile.findOne({ user: req.user._id });
+    const followerProfileId = followerProfile._id;
+
+    const existingRelationship = await Relationship.findOne({
+      followerProfileId: followerProfileId,
+      followingProfileId: followingProfileId,
+    });
+
+    console.log("relationship", existingRelationship);
+    if (existingRelationship) {
+      res.json(true);
+    } else {
+      res.json(false);
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to check relationship" });
+  }
+}
+export {
+  createFollower,
+  getAllFollowingById,
+  deleteFollower,
+  checkFollowingByUsername,
+};

@@ -9,7 +9,7 @@ export default function FollowingPage() {
   const profileId = params.profileId;
   const [profiles, setProfiles] = useState([]);
   const [users, setUsers] = useState([]);
-  const [following, setFollowing] = useState();
+  const [isFollowing, setIsFollowing] = useState(true);
 
   async function getFollowing() {
     try {
@@ -26,7 +26,8 @@ export default function FollowingPage() {
       );
       setUsers(followingUsersArray);
       console.log(followingUsersArray);
-      setFollowing(true);
+      setIsFollowing(true);
+      console.log(isFollowing);
     } catch (error) {
       console.log(error);
     }
@@ -39,7 +40,11 @@ export default function FollowingPage() {
   return (
     <>
       <h1 className="m-5">Following Page</h1>
-      <ProfileCard users={users} profiles={profiles} following={following} />
+      <ProfileCard
+        users={users}
+        profiles={profiles}
+        isFollowing={isFollowing}
+      />
     </>
   );
 }

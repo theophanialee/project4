@@ -3,10 +3,11 @@ import sendRequest from "../utilities/send-request";
 import "./form.css";
 import { UserContext } from "../pages/App/App";
 
-export default function FollowButton({ username }) {
+export default function FollowButton({ username, isFollowing }) {
   const { user } = useContext(UserContext);
   console.log("logged in", user);
   const [popUp, setPopUp] = useState(false);
+  console.log(isFollowing);
 
   async function handleFollow() {
     console.log(
@@ -25,11 +26,15 @@ export default function FollowButton({ username }) {
     }
   }
 
-  const handleUnfollow = () => {
-    // Implement your logic to unfollow here
-    // ...
-    setPopUp(false); // Close the popup after unfollowing
-  };
+  async function handleUnfollow() {
+    const response = await sendRequest(
+      `/api/relationships/deleteFollower`,
+      "DELETE",
+      { following: username }
+    );
+    setPopUp(false);
+    window.location.reload();
+  }
 
   const handleClose = () => {
     setPopUp(false);
@@ -37,12 +42,21 @@ export default function FollowButton({ username }) {
 
   return (
     <>
-      <button
-        className="bg-purple-950 rounded-full py-1 px-3 m-1 text-white"
-        onClick={handleFollow}
-      >
-        Following
-      </button>
+      {isFollowing ? (
+        <button
+          className="bg-purple-950 rounded-full py-1 px-3 m-1 text-white"
+          onClick={handleFollow}
+        >
+          Following
+        </button>
+      ) : (
+        <button
+          className="bg-purple-600 rounded-full py-1 px-3 m-1 text-white"
+          onClick={handleFollow}
+        >
+          Follow
+        </button>
+      )}
       {popUp && (
         <div className="absolute top-0 left-0 h-full w-full flex justify-center items-center bg-opacity-70 bg-gray-900">
           <div className="bg-neutral-950 p-4 rounded shadow">

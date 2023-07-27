@@ -2,6 +2,7 @@ import Post from "../models/Post.js";
 import User from "../models/User.js";
 import Profile from "../models/Profile.js";
 import { profile } from "console";
+import Relationship from "../models/Relationship.js";
 
 async function createPost(req, res) {
   try {
@@ -20,7 +21,7 @@ async function createPost(req, res) {
   }
 }
 
-async function getPosts(req, res) {
+async function getUserPosts(req, res) {
   const { username } = req.params;
 
   if (!username) {
@@ -55,9 +56,34 @@ async function getFollowingPosts(req, res) {
   }
 
   try {
-    // Find all posts in the database
-    const allPosts = await Post.find().populate("user", "username");
+    const loggedInUserId = req.user._id;
+    const loggedInProfile = await Profile.findOne({ user: loggedInUserId });
+    console.log(loggedInProfile);
+    const loggedInProfileId = loggedInProfile._id;
+    console.log(loggedInProfileId);
+    const loggedInRelationships = await Relationship.find({
+      followerProfileId: loggedInProfileId,
+    });
+    console.log(loggedInRelationships);
 
+    const followingProfileIds = loggedInRelationships.map(
+      (profile) => profile.followingProfileId
+    );
+    console.log("following profile ids", followingProfileIds);
+
+    const userIdsArray = await Profile.find(
+      { _id: { $in: followingProfileIds } },
+      { user: 1, _id: 0 }
+    );
+    const followingUserIds = userIdsArray.map((obj) => obj.user);
+    console.log("following user ids", followingUserIds);
+
+    // Find all posts from following users in the database
+    const allPosts = await Post.find({
+      $or: followingUserIds.map((userId) => ({ user: userId })),
+    }).populate("user");
+
+    console.log(allPosts);
     res.json(allPosts);
   } catch (error) {
     res.status(500).json({ error: "Failed to get following posts" });
@@ -211,7 +237,7 @@ async function searchByUsername(req, res) {
 
 export {
   createPost,
-  getPosts,
+  getUserPosts,
   getFollowingPosts,
   deletePost,
   getOnePost,

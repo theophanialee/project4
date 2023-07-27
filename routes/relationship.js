@@ -9,6 +9,10 @@ router.get(
   "/getFollowing/:profileId",
   relationshipsController.getAllFollowingById
 );
-// router.delete("/deleteFollower", relationshipsController.deleteFollower);
+router.delete("/deleteFollower", relationshipsController.deleteFollower);
+router.get(
+  "/checkFollowing/:username",
+  relationshipsController.checkFollowingByUsername
+);
 
 export default router;

@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 export default function ProfilePage() {
   const [posts, setPosts] = useState([]);
   const [profile, setProfile] = useState({});
+  const [isFollowing, setIsFollowing] = useState();
+
   const { user } = useContext(UserContext);
   const { username } = useParams();
 
@@ -37,9 +39,22 @@ export default function ProfilePage() {
     }
   }
 
+  async function checkFollowing() {
+    try {
+      const isFollowingData = await sendRequest(
+        `/api/relationships/checkFollowing/${username}`
+      );
+      console.log(isFollowingData);
+      setIsFollowing(isFollowingData);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     getPosts();
     getProfile();
+    checkFollowing();
   }, [username]);
 
   const formatDate = (dateString) => {
@@ -55,7 +70,11 @@ export default function ProfilePage() {
         <h1 className="text-sm font-bold">@{username}</h1>
 
         {user.username !== username && (
-          <FollowButton user={user} username={username} />
+          <FollowButton
+            user={user}
+            username={username}
+            isFollowing={isFollowing}
+          />
         )}
         <p className="">{profile.bio}</p>
       </div>
