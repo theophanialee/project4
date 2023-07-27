@@ -100,7 +100,7 @@ async function getFollowingPosts(req, res) {
     const followingUserIds = userIdsArray.map((obj) => obj.user);
     const followingUserIdsWithLoggedInUser =
       followingUserIds.concat(loggedInUserId);
-    console.log("following user ids", followingUserIdsWithLoggedInUser);
+    // console.log("following user ids", followingUserIdsWithLoggedInUser);
 
     // Find all posts from following users in the database
     const allPosts = await Post.find({

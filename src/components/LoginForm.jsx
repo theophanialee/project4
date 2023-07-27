@@ -1,5 +1,4 @@
-// import { signIn } from "../utilities/users-service"; // Assuming you have a sign-in function in your users-service.js
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState, useEffect } from "react"; // Import useEffect here
 import "./form.css";
 import { UserContext } from "../pages/App/App";
 import { login } from "../utilities/users-service";
@@ -11,6 +10,7 @@ export default function LoginForm() {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [successMsg, setSuccessMsg] = useState(null);
+  const [isLoading, setIsLoading] = useState(false); // Add a loading state
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -19,19 +19,23 @@ export default function LoginForm() {
       password: e.target.password.value,
     };
     try {
-      // The promise returned by the signUp service method
-      // will resolve to the user object included in the
-      // payload of the JSON Web Token (JWT)
+      setIsLoading(true);
+      setSuccessMsg("Logging in...");
       const existingUser = await login(credentials);
-      setSuccessMsg("Successfully logged in! Taking you home...");
-      setTimeout(() => {
-        setUser(existingUser);
-        navigate("/home");
-      }, 2000);
+      setUser(existingUser);
+      setSuccessMsg("Successfully logged in!");
     } catch {
       setErrorMsg("Log In Failed - Try Again");
+    } finally {
+      setIsLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (successMsg === "Successfully logged in!") {
+      navigate("/home");
+    }
+  }, [successMsg, navigate]);
 
   return (
     <>
@@ -56,8 +60,11 @@ export default function LoginForm() {
             autoComplete="current-password"
           />
         </div>
-        <button className="bg-purple-500 hover:bg-purple-700 m-5">
-          Log In
+        <button
+          className="bg-purple-500 hover:bg-purple-700 m-5"
+          disabled={isLoading}
+        >
+          {isLoading ? "Logging in..." : "Log In"}
         </button>
       </form>
       {errorMsg && <p>{errorMsg}</p>}
