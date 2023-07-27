@@ -28,7 +28,7 @@ async function createUser(req, res) {
       birthdate: "",
     });
 
-    res.status(201).json("new user created!");
+    res.status(201).json(token);
     console.log("Token sent:", token);
   } catch (error) {
     console.error("Error creating user:", error);
