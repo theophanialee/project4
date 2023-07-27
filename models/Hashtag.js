@@ -20,3 +20,4 @@ const hashtagSchema = new mongoose.Schema(
 );
 
 const Hashtag = mongoose.model("Hashtag", hashtagSchema);
+export default Hashtag;

@@ -3,6 +3,8 @@ import User from "../models/User.js";
 import Profile from "../models/Profile.js";
 import { profile } from "console";
 import Relationship from "../models/Relationship.js";
+import Hashtag from "../models/Hashtag.js";
+const hashtagRegex = /#[A-Za-z0-9_]+/g;
 
 async function createPost(req, res) {
   try {
@@ -14,6 +16,27 @@ async function createPost(req, res) {
       reposts: [],
       replies: [],
     });
+
+    // Extract hashtags from the content using the hashtagRegex
+    const hashtags = req.body.content.match(hashtagRegex);
+
+    // If hashtags are found, store them in the Hashtag model
+    if (hashtags && hashtags.length > 0) {
+      for (const tag of hashtags) {
+        // Check if the hashtag already exists in the database
+        const existingHashtag = await Hashtag.findOne({ name: tag });
+
+        if (!existingHashtag) {
+          // If the hashtag doesn't exist, create a new Hashtag document
+          await Hashtag.create({ name: tag, posts: [newPost._id] });
+        } else {
+          // If the hashtag already exists, add the new post's id to the posts array
+          existingHashtag.posts.push(newPost._id);
+          await existingHashtag.save();
+        }
+      }
+    }
+
     console.log(newPost);
     res.status(201).json(newPost);
   } catch (error) {
@@ -58,32 +81,31 @@ async function getFollowingPosts(req, res) {
   try {
     const loggedInUserId = req.user._id;
     const loggedInProfile = await Profile.findOne({ user: loggedInUserId });
-    console.log(loggedInProfile);
     const loggedInProfileId = loggedInProfile._id;
-    console.log(loggedInProfileId);
+    // console.log(loggedInProfileId);
     const loggedInRelationships = await Relationship.find({
       followerProfileId: loggedInProfileId,
     });
-    console.log(loggedInRelationships);
+    // console.log(loggedInRelationships);
 
     const followingProfileIds = loggedInRelationships.map(
       (profile) => profile.followingProfileId
     );
-    console.log("following profile ids", followingProfileIds);
+    // console.log("following profile ids", followingProfileIds);
 
     const userIdsArray = await Profile.find(
       { _id: { $in: followingProfileIds } },
       { user: 1, _id: 0 }
     );
     const followingUserIds = userIdsArray.map((obj) => obj.user);
-    console.log("following user ids", followingUserIds);
+    // console.log("following user ids", followingUserIds);
 
     // Find all posts from following users in the database
     const allPosts = await Post.find({
       $or: followingUserIds.map((userId) => ({ user: userId })),
     }).populate("user");
 
-    console.log(allPosts);
+    // console.log(allPosts);
     res.json(allPosts);
   } catch (error) {
     res.status(500).json({ error: "Failed to get following posts" });
@@ -95,8 +117,8 @@ async function deletePost(req, res) {
 
   try {
     const post = await Post.findById(id);
-    console.log(post.user.toString());
-    console.log(req.user._id);
+    // console.log(post.user.toString());
+    // console.log(req.user._id);
 
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
@@ -133,7 +155,7 @@ async function getOnePost(req, res) {
       return res.status(404).json({ error: "Post not found" });
     }
 
-    console.log(post); // Add this line to see the received data in the server console
+    // console.log(post); // Add this line to see the received data in the server console
 
     res.json(post);
   } catch (error) {
@@ -179,7 +201,7 @@ async function addLike(req, res) {
 async function addReply(req, res) {
   console.log("addreply");
   const { id } = req.params;
-  console.log(id);
+  // console.log(id);
 
   try {
     const originalPost = await Post.findById(id);
@@ -196,7 +218,7 @@ async function addReply(req, res) {
     });
 
     originalPost.replies.push(newReply._id);
-    console.log("reply user id", newReply._id);
+    // console.log("reply user id", newReply._id);
     await originalPost.save(); // Save the updated original post with the added reply
 
     // Save the new reply post to the database
@@ -205,7 +227,6 @@ async function addReply(req, res) {
     // Respond with the newly created reply post
     res.status(201).json(newReply);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Server error" });
   }
 }
@@ -224,13 +245,13 @@ async function searchByUsername(req, res) {
   }
 
   const userIds = users.map((user) => user._id);
-  console.log(userIds);
+  // console.log(userIds);
 
   const profiles = await Profile.find({ user: { $in: userIds } }).populate(
     "user",
     "username"
   );
-  console.log(profiles);
+  // console.log(profiles);
 
   res.json(profiles);
 }
