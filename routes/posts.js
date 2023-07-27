@@ -11,6 +11,5 @@ router.get("/onePost/:id", postsController.getOnePost);
 router.patch("/like/:id", postsController.addLike);
 // router.patch("/repost/:id", postsController.addRepost);
 router.post("/reply/:id", postsController.addReply);
-router.get("/search/:searchQuery", postsController.searchByUsername);
 
 export default router;

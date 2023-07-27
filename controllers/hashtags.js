@@ -28,4 +28,25 @@ async function getTrendingTags(req, res) {
   }
 }
 
-export { getTrendingTags };
+async function searchByHashtag(req, res) {
+  const { searchQuery } = req.params;
+
+  console.log("search by hashtag", searchQuery);
+
+  const hashtag = await Hashtag.find({
+    name: { $regex: searchQuery, $options: "i" },
+  }).populate({
+    path: "posts",
+    populate: {
+      path: "user",
+      model: "User",
+    },
+  });
+
+  console.log(hashtag);
+  const postsArray = hashtag.map((hashtag) => hashtag.posts);
+  console.log(postsArray);
+  res.json(postsArray[0]);
+}
+
+export { getTrendingTags, searchByHashtag };

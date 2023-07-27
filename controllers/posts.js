@@ -233,30 +233,7 @@ async function addReply(req, res) {
   }
 }
 
-async function searchByUsername(req, res) {
-  const { searchQuery } = req.params;
 
-  console.log("search by username", searchQuery);
-
-  const users = await User.find({
-    username: { $regex: searchQuery, $options: "i" },
-  });
-
-  if (users.length === 0) {
-    return res.status(404).json({ message: "No users found" });
-  }
-
-  const userIds = users.map((user) => user._id);
-  // console.log(userIds);
-
-  const profiles = await Profile.find({ user: { $in: userIds } }).populate(
-    "user",
-    "username"
-  );
-  // console.log(profiles);
-
-  res.json(profiles);
-}
 
 export {
   createPost,
@@ -266,5 +243,4 @@ export {
   getOnePost,
   addLike,
   addReply,
-  searchByUsername,
 };

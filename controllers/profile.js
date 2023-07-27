@@ -46,27 +46,29 @@ async function getProfileByUn(req, res) {
     res.status(500).json({ error: "Server error" });
   }
 }
+async function searchByUsername(req, res) {
+  const { searchQuery } = req.params;
 
-// async function findUserById(req, res) {
-//   if (!req.user) {
-//     res.status(401).json({ message: "Not logged in" });
-//     return;
-//   }
+  console.log("search by username", searchQuery);
 
-//   try {
-//     const userId = req.user._id;
-//     const userDetail = await Profile.findOne({ customerId: userId });
-//     if (userDetail.length > 0) {
-//       console.log("routed");
-//       console.log(userId);
-//       const newProfile = await Profile.create({ customerId: userId });
-//       res.json(newProfile);
-//       return;
-//     }
-//     res.json(userDetail);
-//   } catch {
-//     res.status(404).json({ msg: "Id not found!" });
-//   }
-// }
+  const users = await User.find({
+    username: { $regex: searchQuery, $options: "i" },
+  });
 
-export { editProfile, getProfileByUn };
+  if (users.length === 0) {
+    return res.status(404).json({ message: "No users found" });
+  }
+
+  const userIds = users.map((user) => user._id);
+  // console.log(userIds);
+
+  const profiles = await Profile.find({ user: { $in: userIds } }).populate(
+    "user",
+    "username"
+  );
+  // console.log(profiles);
+
+  res.json(profiles);
+}
+
+export { editProfile, getProfileByUn, searchByUsername };
