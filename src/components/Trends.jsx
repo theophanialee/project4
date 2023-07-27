@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import sendRequest from "../utilities/send-request";
 
 export default function Trends() {
-  const [trends, setTrends] = useState();
+  const [trends, setTrends] = useState([]);
 
   async function getTrends() {
     console.log("highest trend counts");
