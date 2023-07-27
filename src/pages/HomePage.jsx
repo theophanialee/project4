@@ -103,7 +103,12 @@ return (
           </button>
         </div>
       </div>
-      <PostCard user={user} posts={posts} />
+      {posts.length === 0 && (
+        <div className="text-center m-10 text-xl">
+          No posts yet! Spill some Tea™!
+        </div>
+      )}
+      {posts.length > 0 && <PostCard user={user} posts={posts} />}
     </div>
   </>
 );

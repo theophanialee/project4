@@ -11,6 +11,7 @@ export default function LoginForm() {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [successMsg, setSuccessMsg] = useState(null);
+
   async function handleSubmit(e) {
     e.preventDefault();
     const credentials = {
@@ -22,11 +23,11 @@ export default function LoginForm() {
       // will resolve to the user object included in the
       // payload of the JSON Web Token (JWT)
       const existingUser = await login(credentials);
-
+      setSuccessMsg("Successfully logged in! Taking you home...");
       setTimeout(() => {
         setUser(existingUser);
-        navigate("/");
-      }, 4000);
+        navigate("/home");
+      }, 2000);
     } catch {
       setErrorMsg("Log In Failed - Try Again");
     }
@@ -60,6 +61,7 @@ export default function LoginForm() {
         </button>
       </form>
       {errorMsg && <p>{errorMsg}</p>}
+      {successMsg && <p className="text-green-500">{successMsg}</p>}
     </>
   );
 }

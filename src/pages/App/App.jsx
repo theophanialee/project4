@@ -63,6 +63,7 @@ export default function App() {
                 <Routes>
                   {/* Routes that require login */}
                   <Route path="/" element={<HomePage />} />
+                  <Route path="home" element={<HomePage />} />
                   <Route
                     path="/notifications"
                     element={<NotificationsPage />}
@@ -129,7 +130,7 @@ export default function App() {
               >
                 <Routes>
                   {/* Routes that require login */}
-                  <Route path="/" element={<AdminHomePage />} />
+                  <Route path="/home" element={<AdminHomePage />} />
                   <Route path="/settings" element={<SettingsPage />} />
                   <Route
                     path="/settings/changeusername"
