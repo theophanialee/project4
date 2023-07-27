@@ -20,8 +20,8 @@ async function createFollower(req, res) {
     const followerProfileId = followerProfile._id;
 
     const existingRelationship = await Relationship.findOne({
-      followerUserId: req.user._id,
-      followingUserId: followingUserId,
+      followerProfileId: followerProfileId,
+      followingProfileId: followingProfileId,
     });
 
     if (existingRelationship) {
@@ -56,30 +56,6 @@ async function getAllFollowingById(req, res) {
       },
     });
 
-    // console.log(data);
-
-    // const filteredData = data.filter(
-    //   (relationship) => relationship.followerProfileId === profileId
-    // );
-
-    // console.log("filteredData", filteredData);
-
-    // const followingProfiles = data.map((relationship) => ({
-    //   _id: relationship.followingProfileId._id,
-    //   displayname: relationship.followingProfileId.displayname,
-    //   displaypic: relationship.followingProfileId.displaypic,
-    //   bio: relationship.followingProfileId.bio,
-    //   birthdate: relationship.followingProfileId.birthdate,
-    // }));
-
-    // const followingUsers = data.map((relationship) => ({
-    //   _id: relationship.followingUserId._id,
-    //   username: relationship.followingUserId.username,
-    // }));
-
-    // console.log("Following Profiles:", followingProfiles);
-    // console.log("Following Users:", followingUsers);
-
     console.log(followingProfiles);
 
     res.status(200).json(followingProfiles);
@@ -88,4 +64,8 @@ async function getAllFollowingById(req, res) {
   }
 }
 
-export { createFollower, getAllFollowingById };
+// async function deleteFollower(res, req) {
+//   console.log(req.body);
+// }
+
+export { createFollower, getAllFollowingById,  };
