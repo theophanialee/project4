@@ -11,7 +11,7 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const [successMsg, setSuccessMsg] = useState(null);
   const [isLoading, setIsLoading] = useState(false); // Add a loading state
-
+  console.log(user);
   async function handleSubmit(e) {
     e.preventDefault();
     const credentials = {
@@ -22,8 +22,10 @@ export default function LoginForm() {
       setIsLoading(true);
       setSuccessMsg("Logging in...");
       const existingUser = await login(credentials);
+      console.log(existingUser);
       setUser(existingUser);
       setSuccessMsg("Successfully logged in!");
+      navigate("/home");
     } catch {
       setErrorMsg("Log In Failed - Try Again");
     } finally {

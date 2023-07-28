@@ -8,7 +8,7 @@ async function signUp(userData) {
   const token = await usersAPI.signUp(userData);
   localStorage.setItem("token", token);
   // Returning whatever is sent back by the server
-  return token;
+  return  getUser();
 }
 
 async function checkUsername(username) {
@@ -45,7 +45,7 @@ async function login(credentials) {
   const token = await usersAPI.login(credentials);
   localStorage.setItem("token", token);
   // Returning whatever is sent back by the server
-  return token;
+  return getUser();
 }
 
 export { signUp, checkUsername, getUser, logout as logOut, login };

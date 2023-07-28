@@ -2,6 +2,7 @@ import LoginForm from "../components/LoginForm";
 import { Link } from "react-router-dom";
 
 export default function LoginPage() {
+
   return (
     <>
       <div className="fixed top-0 right-0 w-1/2 h-3/4 text-center">

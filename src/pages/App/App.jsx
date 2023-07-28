@@ -34,6 +34,7 @@ import ErrorPage from "../../components/ErrorPage";
 export const UserContext = createContext();
 export default function App() {
   const [user, setUser] = useState(getUser());
+  console.log(getUser());
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
